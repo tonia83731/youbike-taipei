@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <>
       <HeadSettings
-        pageName="Home"
+        pageName="首頁"
         pageDescription="This is YouBike homepage."
       />
       <section className="mt-4 mb-6">
@@ -21,7 +21,6 @@ export default function HomePage() {
         <CarouselSteps />
         <BorrowSteps />
       </section>
-      <Footer />
     </>
   );
 }

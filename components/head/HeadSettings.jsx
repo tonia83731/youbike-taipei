@@ -6,7 +6,7 @@ export default function HeadSettings (props) {
   const {pageName, pageDescription} = props
   return (
     <Head>
-      <title>{pageName} | YouBike</title>
+      <title>{pageName} | YouBike2.0</title>
       <meta name="description" value={pageDescription} />
       {/* <link rel="icon" href="@/public/YouBikeFav.ico" sizes="any" /> */}
     </Head>

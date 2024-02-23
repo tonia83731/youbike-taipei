@@ -7,6 +7,7 @@ import Frame from "@/public/images/Frame.svg";
 import StopTable from "@/components/realtime/stopTable";
 import { getYouBikeRealtimeData } from "@/library/realtime_data";
 import Pagination from "@/components/realtime/Pagination";
+import HeadSettings from "@/components/head/HeadSettings";
 
 const theadData = ["區域", "站點名稱", "可借車輛", "可選空位"];
 
@@ -53,65 +54,71 @@ export default function RealTimePage(props) {
   }, []);
 
   return (
-    <section className="">
-      <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center">
-        <div className="grid grid-cols-3 items-center gap-2 lg:grid-cols-4">
-          <div className="justify-self-start">
-            <CustomCheckbox id="all" name="全部" label="全部勾選" />
+    <>
+      <HeadSettings
+        pageName="路線資訊"
+        pageDescription="This is YouBike realtime page."
+      />
+      <section className="">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center">
+          <div className="grid grid-cols-3 items-center gap-2 lg:grid-cols-4">
+            <div className="justify-self-start">
+              <CustomCheckbox id="all" name="全部" label="全部勾選" />
+            </div>
+            <span className="col-span-3"></span>
+            {districts.map((district, index) => {
+              const alignPositionSmall =
+                index % 3 === 0
+                  ? "justify-self-start"
+                  : index % 3 === 2
+                  ? "justify-self-end"
+                  : "justify-self-center";
+              const alignPositionLarge =
+                index % 4 === 0
+                  ? "justify-self-start"
+                  : index % 4 === 3
+                  ? "justify-self-end"
+                  : "justify-self-center";
+              const alignPosition =
+                screenWidth.width > 1024
+                  ? alignPositionLarge
+                  : alignPositionSmall;
+              return (
+                <div className={alignPosition} key={district.zip}>
+                  <CustomCheckbox
+                    id={district.zip}
+                    name={district.name}
+                    label={district.name}
+                  />
+                </div>
+              );
+            })}
           </div>
-          <span className="col-span-3"></span>
-          {districts.map((district, index) => {
-            const alignPositionSmall =
-              index % 3 === 0
-                ? "justify-self-start"
-                : index % 3 === 2
-                ? "justify-self-end"
-                : "justify-self-center";
-            const alignPositionLarge =
-              index % 4 === 0
-                ? "justify-self-start"
-                : index % 4 === 3
-                ? "justify-self-end"
-                : "justify-self-center";
-            const alignPosition =
-              screenWidth.width > 1024
-                ? alignPositionLarge
-                : alignPositionSmall;
-            return (
-              <div className={alignPosition} key={district.zip}>
-                <CustomCheckbox
-                  id={district.zip}
-                  name={district.name}
-                  label={district.name}
-                />
-              </div>
-            );
-          })}
+          <Image
+            src={Frame}
+            alt="realtime image"
+            width={500}
+            height={200}
+            className="hidden lg:block lg:w-full lg:h-[180px] lg:object-cover object-top"
+          />
         </div>
-        <Image
-          src={Frame}
-          alt="realtime image"
-          width={500}
-          height={200}
-          className="hidden lg:block lg:w-full lg:h-[180px] lg:object-cover object-top"
-        />
-      </div>
-      <div className="mt-6 mb-4">
-        <StopTable
-          screenWidth={screenWidth}
-          theadData={theadData}
-          tbodyData={tbodyData}
-        />
-      </div>
-      <div className="flex justify-center lg:justify-end">
-        <Pagination
-          pages={showNumArray}
-          currentPage={currentPage}
-          onPageClick={handlePageClick}
-          totalPage={numPage}
-        />
-      </div>
-    </section>
+        <div className="mt-6 mb-4">
+          <StopTable
+            screenWidth={screenWidth}
+            theadData={theadData}
+            tbodyData={tbodyData}
+          />
+        </div>
+        <div className="flex justify-center mb-6 lg:justify-end">
+          <Pagination
+            pages={showNumArray}
+            currentPage={currentPage}
+            onPageClick={handlePageClick}
+            totalPage={numPage}
+          />
+        </div>
+      </section>
+    </>
   );
 }
 
