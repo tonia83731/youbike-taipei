@@ -9,7 +9,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="w-full grid grid-cols-4 gap-2 mt-4 text-center items-center text-lg md:text-xl xl:text-2xl">
+    <footer className="w-full grid grid-cols-4 gap-2 text-center items-center text-lg md:text-xl xl:text-2xl">
       <div className="h-16 py-2 px-1 col-span-2 bg-olive-100 text-white flex justify-center items-center">
         <Link href="/contact">聯絡我們</Link>
         <div className="mx-2 md:mx-4"> | </div>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Patrick+Hand&display=swap');
 
 body {
   /* font */
@@ -21,4 +21,9 @@ button {
   width: 90%;
   max-width: 1280px;
   margin: 2rem auto;
+}
+.patrick-hand {
+  font-family: "Patrick Hand", cursive;
+  font-weight: 400;
+  font-style: normal;
 }

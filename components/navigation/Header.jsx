@@ -21,14 +21,14 @@ export default function Header () {
             />
           </Link>
         </div>
-        <nav className="mt-3 justify-items-center items-center font-semibold lg:mt-0 lg:col-start-4 lg:col-span-3">
-          <div className="grid grid-cols-7 gap-4 items-center lg:grid-cols-5 lg:gap-2">
-            <Link href="/realtime" className="col-start-3 lg:col-start-2">
+        <nav className="mt-3 items-center font-semibold lg:mt-0 lg:col-start-4 lg:col-span-3">
+          <div className="grid grid-cols-5 gap-4 justify-items-center items-center lg:gap-2">
+            <Link href="/realtime" className="col-start-2">
               路線資訊
             </Link>
             <Link href="/statistics">數據統計</Link>
             <Link href="/news">最新消息</Link>
-            <div className="col-start-7 lg:col-start-5 flex justify-end">
+            <div className="col-start-5 flex justify-end">
               <Link href="/login">
                 <div className="w-7 h-7 rounded-full border-2 border-olive-100 flex justify-center items-center md:w-8 md:h-8 lg:w-9 lg:h-9">
                   <FontAwesomeIcon icon={faUser} />

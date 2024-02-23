@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  color: #2a3129;
+}
+.wrapper input[type="checkbox"] {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 0.15em;
+  margin-right: 0.5em;
+  border: 0.15em solid #2a3129;
+  outline: none;
+  cursor: pointer;
+}
+/* .checkbox-wrapper span {
+  display: block;
+  height: 1.4em;
+} */
+
+.wrapper input:checked {
+  background-color: #B5C267;
+  position: relative;
+}
+
+.wrapper input:checked::before {
+  content: "✔";
+  font-size: 0.8em;
+  color: #ffffff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
