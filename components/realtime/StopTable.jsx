@@ -1,3 +1,4 @@
+import { getName } from "@/library/handleName";
 import Link from "next/link";
 
 export default function StopTable (props) {
@@ -24,8 +25,7 @@ export default function StopTable (props) {
       <tbody className="text-xl">
         {
           tbodyData.map((data, index) => {
-            const splitSna = data.sna.split("_");
-            const name = splitSna[1]
+            const name = getName(data.sna)
             return (
               <tr
                 className={`h-16 ${

@@ -1,20 +1,34 @@
-export const formatDate = (monthly, num) => {
-  const string = monthly[num]["臺北市youbike每月使用量"];
-  const numOnly = string.match(/\d+/g).map(Number);
+// export const formatDate = (monthly, num) => {
+//   const string = monthly[num]["臺北市youbike每月使用量"];
+//   const numOnly = string.match(/\d+/g).map(Number);
+//   const formatted = numOnly[0] + 1911 + "/" + numOnly[1];
+//   const formattedDate = new Date(formatted);
+//   return formattedDate;
+// };
+
+export const formattedDate = (date) => {
+  const numOnly = date.match(/\d+/g).map(Number);
   const formatted = numOnly[0] + 1911 + "/" + numOnly[1];
-  const formattedDate = new Date(formatted);
-  return formattedDate;
-};
-export const getDateLabels = (startDate, endDate) => {
+  const formattedDate = new Date(formatted)
+
+  return {formatted, formattedDate}
+}
+
+
+export const getMonthlyLabels = (datas) => {
   const months = []
-  const currentDate = new Date(startDate)
+  
+  datas.map((data) => {
+    months.push(data.date)
+  })
 
-   while (currentDate <= endDate) {
-     let year = currentDate.getFullYear();
-     let month = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
-     months.push(`${year}/${month < 10 ? "0" : ""}${month}`);
-     currentDate.setMonth(currentDate.getMonth() + 1);
-   }
+  return months;
+}
 
-   return months;
+export const getMonthlyDatas = (datas) => {
+  const monthly_datas = []
+  datas.map((data) => {
+    monthly_datas.push(data["數量（次數）"]);
+  })
+  return monthly_datas
 }
