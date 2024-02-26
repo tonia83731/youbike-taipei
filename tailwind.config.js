@@ -35,6 +35,7 @@ module.exports = {
           100: "#2a3129",
         },
         white: "#ffffff",
+        "white-75": "rgb(255, 255, 255, .75)",
       },
       screens: {
         900: "900px",
