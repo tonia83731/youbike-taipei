@@ -41,7 +41,7 @@ export default function BackStageLogin() {
             type="submit"
             className="w-full py-2 mt-4 bg-lime-100 text-white rounded-md"
           >
-            提交
+            登入
           </button>
         </form>
       </section>

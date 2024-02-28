@@ -10,7 +10,7 @@ export default function DefaultInput(props) {
         className="h-8 px-4 bg-transparent border-b-[3px] border-olive-100 focus:outline-none focus:border-lime-100"
         name={name}
         id={id}
-        pattern={pattern | ""}
+        // pattern={pattern | ""}
         required={isRequired | false}
         value={inputValue}
         onChange={(e) => onInputChange(e)}

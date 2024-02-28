@@ -5,9 +5,9 @@ import {
   getMonthlyUseData,
 } from "@/library/statistics_data";
 import { formattedDate, getMonthlyLabels, getMonthlyDatas } from "@/library/handleDate";
-import DatePicker, { registerLocale } from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import zhTW from "date-fns/locale/zh-TW";
+// import zhTW from "date-fns/locale/zh-TW";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -37,7 +37,7 @@ ChartJS.register(
 
 import { useEffect, useState } from "react";
 
-registerLocale("zh-TW", zhTW);
+// registerLocale("zh-TW", zhTW);
 
 export default function StatisticsPage(props) {
   const { popular, updateDate, month, monthly, m_updateDate } = props;
@@ -146,7 +146,7 @@ export default function StatisticsPage(props) {
       />
       <section className="">
         <div className="mb-6">
-          <div className="grid grid-cols-4 gap-1 text-xl font-bold">
+          <div className="grid grid-rows-2 gap-1 text-xl font-bold md:grid-cols-4 md:grid-rows-1">
             <div className="col-span-2 h-12 bg-lime-100 text-white flex items-center px-2">
               臺北市youbike每月使用量
             </div>
@@ -182,7 +182,10 @@ export default function StatisticsPage(props) {
                 className="w-full h-12 border border-slate-300 rounded py-1 px-4 placeholder:text-slate-300 focus:shadow-outline focus:outline-slate-500"
                 wrapperClassName="w-5/12"
               />
-              <button className="h-10 px-4 py-2 ml-2 bg-olive-100 text-white rounded" onClick={handleResetClick}>
+              <button
+                className="h-10 px-4 py-2 ml-2 bg-olive-100 text-white rounded"
+                onClick={handleResetClick}
+              >
                 重置
               </button>
             </div>

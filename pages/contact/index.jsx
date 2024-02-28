@@ -9,16 +9,25 @@ import { useState } from "react";
 export default function NewsPage(props) {
   const { info, stations } = props;
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    text: ''
-  })
+    name: "",
+    phone: "",
+    email: "",
+    text: "",
+  });
   // console.log(info);
   const handleContactSubmit = (e) => {
-    e.preventDefault()
-    console.log(formData)
-  }
+    e.preventDefault();
+    // console.log(formData)
+    fetch("/api/comments", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
   return (
     <>
       <HeadSettings
@@ -80,7 +89,7 @@ export default function NewsPage(props) {
                 label="姓名"
                 id="contact-name"
                 name="name"
-                isRequired={true}
+                // isRequired={true}
                 inputValue={formData.name}
                 onInputChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
@@ -92,7 +101,7 @@ export default function NewsPage(props) {
                   id="contact-phone"
                   name="phone"
                   type="tel"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   inputValue={formData.phone}
                   onInputChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
@@ -103,8 +112,8 @@ export default function NewsPage(props) {
                   id="contact-email"
                   name="email"
                   type="email"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                  isRequired={true}
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  // isRequired={true}
                   inputValue={formData.email}
                   onInputChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -124,13 +133,12 @@ export default function NewsPage(props) {
                   cols="30"
                   rows="10"
                   className="px-4 border-b-[3px] border-olive-100 focus:outline-none focus:border-lime-100 resize-none"
-                  onInputChange={(e) =>
+                  value={formData.text}
+                  onChange={(e) =>
                     setFormData({ ...formData, text: e.target.value })
                   }
-                  required
-                >
-                  {formData.text}
-                </textarea>
+                  // required
+                />
                 <div className="flex justify-end">
                   <button
                     type="submit"
