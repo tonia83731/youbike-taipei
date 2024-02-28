@@ -1,5 +1,8 @@
+import { MongoClient } from "mongodb";
+
 export default async function handler(req, res) {
   console.log(req.query);
+  const client = await MongoClient.connect(process.env.NEXT_PUBLIC_MONGODB_KEY);
   if (req.method === "POST") {
     const { name, phone, email, text } = req.body;
     // check validation
@@ -21,36 +24,28 @@ export default async function handler(req, res) {
       return;
     }
 
-    // console.log(name, phone, email, text);
     const newComment = {
-      id: new Date().toISOString,
       name,
       phone,
       email,
       text,
     };
-    console.log(newComment);
+    const db = client.db();
+    await db.collection("comments").insertOne({ newComment });
+
+    
     res.status(200).json({ message: "Added comment!", comment: newComment });
   }
-
+  
   if (req.method === "GET") {
-    const dummyList = [
-      {
-        id: "c1",
-        name: "John Doe",
-        phone: "123-456-7890",
-        email: "john@example.com",
-        comment: "Nice person",
-      },
-      {
-        id: "c2",
-        name: "Jane Smith",
-        phone: "987-654-3210",
-        email: "jane@example.com",
-        comment: "Great service",
-      },
-    ];
-
-    res.status(200).json({ comments: dummyList });
+    const db = client.db();
+    const documents = await db
+    .collection("comments")
+    .find()
+    .sort({ _id: -1 })
+    .toArray();
+    
+    res.status(200).json({ comments: documents });
   }
+  client.close();
 }
