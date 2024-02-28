@@ -19,7 +19,7 @@ export default function BackDefaultInput(props) {
         className="h-8 px-4 bg-transparent border-2 border-olive-100 rounded focus:outline-none focus:border-lime-100"
         name={name}
         id={id}
-        pattern={pattern | ""}
+        // pattern={pattern | ""}
         required={isRequired | false}
         value={inputValue}
         onChange={(e) => onInputChange(e)}

@@ -1,38 +1,78 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BackDefaultInput from "../input/BackDefaultInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
-export default function BackNewsForm() {
+export default function BackNewsForm(props) {
+  const { editData } = props;
+  // console.log(editData)
+  const currentDate = dayjs().format();
   const [newsData, setNewsData] = useState({
     title: "",
     subtitle: "",
     description: "",
     image: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: currentDate,
+    endDate: currentDate,
   });
+  const [formStatus, setFormStatus] = useState("add");
+
+  const handleCancelEdit = () => {
+    setFormStatus("add")
+    setNewsData({
+      title: "",
+      subtitle: "",
+      description: "",
+      image: "",
+      startDate: currentDate,
+      endDate: currentDate,
+    });
+  }
+
+  const handleNewsSubmit = (e) => {
+    e.preventDefault();
+    fetch("/api/news", {
+      method: "POST",
+      body: JSON.stringify(newsData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
+
+  useEffect(() => {
+    if (editData.length > 0) {
+      setFormStatus("edit");
+      setNewsData(editData[0]);
+    } else {
+      setFormStatus("add");
+    }
+  }, [editData]);
+
   return (
-    <form className="bg-white shadow-md px-4 py-6">
+    <form className="bg-white shadow-md px-4 py-6" onSubmit={handleNewsSubmit}>
       <div className="grid grid-cols-2 gap-4">
         <BackDefaultInput
           label="活動標題"
           id="news-title"
           name="title"
-          isRequired={true}
+          // isRequired={true}
           inputValue={newsData.title}
-          onInputChange={() =>
-            setNewsData({ ...newDate, title: e.target.value })
+          onInputChange={(e) =>
+            setNewsData({ ...newsData, title: e.target.value })
           }
         />
         <BackDefaultInput
           label="活動副標題"
           id="news-subtitle"
           name="subtitle"
-          isRequired={true}
+          // isRequired={true}
           inputValue={newsData.subtitle}
-          onInputChange={() =>
-            setNewsData({ ...newDate, subtitle: e.target.value })
+          onInputChange={(e) =>
+            setNewsData({ ...newsData, subtitle: e.target.value })
           }
         />
       </div>
@@ -47,15 +87,14 @@ export default function BackNewsForm() {
           name="description"
           id="news-description"
           cols="30"
-          rows="10"
+          rows="4"
           className="px-4 bg-transparent border-2 border-olive-100 rounded focus:outline-none focus:border-lime-100 resize-none"
-          onInputChange={(e) =>
+          value={newsData.description}
+          onChange={(e) =>
             setNewsData({ ...newsData, description: e.target.value })
           }
-          required
-        >
-          {newsData.description}
-        </textarea>
+          // required
+        />
       </div>
       <div className="mt-2 mb-4">
         <div className="text-olive-100 text-lg font-semibold">活動日期</div>
@@ -64,7 +103,7 @@ export default function BackNewsForm() {
           dateFormat="yyyy/MM/dd"
           locale="zh-TW"
           // isClearable={true}
-          maxDate={new Date()}
+          minDate={new Date()}
           // placeholderText="選擇日期"
           selectsRange={true}
           startDate={newsData.startDate}
@@ -85,10 +124,31 @@ export default function BackNewsForm() {
         id="news-image"
         name="image"
         type="url"
-        isRequired={true}
+        // isRequired={true}
         inputValue={newsData.image}
-        onInputChange={() => setNewsData({ ...newDate, image: e.target.value })}
+        onInputChange={(e) =>
+          setNewsData({ ...newsData, image: e.target.value })
+        }
       />
+      <div className="flex justify-end">
+        {formStatus !== "add" ? (
+          <button
+            type="button"
+            className="w-1/4 py-2 mt-4 mr-2 bg-slate-200 text-white rounded-md"
+            onClick={handleCancelEdit}
+          >
+            取消
+          </button>
+        ) : (
+          <></>
+        )}
+        <button
+          type="submit"
+          className="w-1/4 py-2 mt-4 bg-lime-100 text-white rounded-md"
+        >
+          {formStatus === "add" ? "新增" : "修改"}
+        </button>
+      </div>
     </form>
   );
 }

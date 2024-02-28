@@ -1,8 +1,15 @@
-import { MongoClient } from "mongodb";
+import { ConnectDatabase, insertDocument } from "@/helpers/db-util";
 
 export default async function handler(req, res) {
-  console.log(req.query);
-  const client = await MongoClient.connect(process.env.NEXT_PUBLIC_MONGODB_KEY);
+  // console.log(req.query);
+  let client;
+  // connect database
+  try {
+    client = await ConnectDatabase();
+  } catch (error) {
+    res.status(500).json({ message: "Connecting to the database failed!" });
+    return;
+  }
   if (req.method === "POST") {
     const { name, phone, email, text } = req.body;
     // check validation
@@ -30,21 +37,29 @@ export default async function handler(req, res) {
       email,
       text,
     };
-    const db = client.db();
-    await db.collection("comments").insertOne({ newComment });
 
-    
-    res.status(200).json({ message: "Added comment!", comment: newComment });
+    // insert data
+    try {
+      await insertDocument(client, "comments", newComment);
+      client.close();
+    } catch (error) {
+      res.status(500).json({ message: "Inserting comment data failed!" });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ message: "Added comment success!", comment: newComment });
   }
-  
+
   if (req.method === "GET") {
     const db = client.db();
     const documents = await db
-    .collection("comments")
-    .find()
-    .sort({ _id: -1 })
-    .toArray();
-    
+      .collection("comments")
+      .find()
+      .sort({ _id: -1 })
+      .toArray();
+
     res.status(200).json({ comments: documents });
   }
   client.close();

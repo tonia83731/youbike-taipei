@@ -24,7 +24,7 @@ export default function BackFeedbackTable (props) {
       <tbody className="text-xl">
         {commentList.map((data, index) => {
           console.log(data)
-          const { _id, name, email, phone, text } = data.newComment
+          const { _id, name, email, phone, text } = data
           return (
             <tr
               className={`h-16 ${

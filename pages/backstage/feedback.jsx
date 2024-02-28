@@ -26,13 +26,12 @@ export default function FeedbackPage() {
 }
 
 // export async function getStaticProps() {
-//   const res = await fetch("/api/comments");
-//   const data = res.json();
-//   const comments = data.comments;
-//   console.log(comments);
+//   const res = await fetch('api/comments')
+//   const data = res.json()
+//   console.log(data)
 //   return {
 //     props: {
-//       comments: comments,
+//       comments: ,
 //     },
 //   };
 // }
