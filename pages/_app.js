@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }) {
       {/* <Header /> */}
       {/* <BackStageHeader /> */}
       {showHeader}
-      <main className="pt-[120px] lg:pt-[90px]">
+      <main className="pt-[140px] lg:pt-[110px]">
         <Component {...pageProps} />
       </main>
       {showFooter}

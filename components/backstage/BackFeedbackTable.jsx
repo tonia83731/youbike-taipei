@@ -60,7 +60,7 @@ export default function BackFeedbackTable(props) {
                 {email}
               </td>
               <td className="px-2 text-olive-100">{text}</td>
-              <td className="px-2">
+              <td className="px-2 text-center">
                 <button
                   onClick={() => handleFeedbackDelete(_id)}
                   className="py-1 px-2 bg-mustard-100 text-white rounded-md"

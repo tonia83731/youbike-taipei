@@ -49,7 +49,7 @@ export default function BackStageHeader() {
                 href="/backstage/member-list"
                 className={path === "news" ? "text-lime-100" : ""}
               >
-                會員列表
+                訂閱名單
               </Link>
             </div>
           </nav>
