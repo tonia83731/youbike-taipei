@@ -21,7 +21,8 @@ export default function BackStageFooter() {
   );
   // console.log(router)
   return (
-    <footer className="w-full text-center items-center text-lg md:text-xl xl:text-2xl">
+    <footer className="w-full text-center items-center text-lg md:text-xl xl:text-2xl grid grid-cols-3 gap-2 lg:grid-cols-4">
+      <div className="w-full h-full bg-lime-100 col-span-2 lg:col-span-3"></div>
       {showLink}
     </footer>
   );
