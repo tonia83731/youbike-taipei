@@ -166,7 +166,7 @@ export async function getStaticProps() {
   };
   const info_data = await getJsonData("contactInfo");
   const station_data = await getJsonData("contactStation");
-  console.log(station_data);
+  // console.log(station_data);
 
   return {
     props: {

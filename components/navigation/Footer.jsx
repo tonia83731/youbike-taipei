@@ -14,22 +14,22 @@ export default function Footer() {
         <Link href="/contact">聯絡我們</Link>
         <div className="hidden mx-2 md:block md:mx-4"> | </div>
         <div className="hidden text-2xl md:grid md:grid-cols-4 md:gap-2">
-          <Link href="#">
+          <Link href="https://www.instagram.com/youbike_tw/">
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faSquareInstagram} />
             </div>
           </Link>
-          <Link href="#">
+          <Link href="https://www.facebook.com/YouBike.Taipei.tw/">
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faSquareFacebook} />
             </div>
           </Link>
-          <Link href="#">
+          <Link href="https://page.line.me/122jqmcv?openQrModal=true">
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faLine} />
             </div>
           </Link>
-          <Link href="#">
+          <Link href="https://www.youtube.com/channel/UCXRTadM5Rgs_EXtdNREj9KQ?view_as=subscriber">
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faYoutube} />
             </div>
