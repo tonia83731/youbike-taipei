@@ -1,4 +1,6 @@
 import { ConnectDatabase, insertDocument } from "@/helpers/db-util";
+import { ObjectId } from "bson";
+
 
 export default async function handler(req, res) {
   // console.log(req.query);
@@ -61,6 +63,32 @@ export default async function handler(req, res) {
       .toArray();
 
     res.status(200).json({ comments: documents });
+  }
+  if (req.method === "DELETE") {
+    const { id } = req.body;
+    // console.log(id)
+    if (!id) {
+      res.status(422).json({ message: "Cannot find comment!" });
+      return;
+    }
+
+    try {
+      // console.log(client)
+      const db = client.db();
+      const result = await db
+        .collection("comments")
+        .deleteOne({ _id: new ObjectId(id) });
+      const { deletedCount } = result;
+      if (deletedCount === 0) {
+        res.status(422).json({ message: "Comment not found!" });
+        return;
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: "Delete comment data failed!" });
+      return;
+    }
+    res.status(200).json({ message: "Delete comment success!", _id: id });
   }
   client.close();
 }

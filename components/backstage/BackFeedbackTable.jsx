@@ -1,7 +1,27 @@
-export default function BackFeedbackTable (props) {
-  const {commentList} = props
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
+export default function BackFeedbackTable(props) {
+  const { commentList } = props;
   // console.log(commentList)
-  const theadData = ["使用者", "使用者電話", "使用者Email", "使用者反饋"];
+  const theadData = [
+    "使用者",
+    "使用者電話",
+    "使用者Email",
+    "使用者反饋",
+    "刪除",
+  ];
+
+  const handleFeedbackDelete = (_id) => {
+    console.log(_id)
+    fetch("/api/comments", {
+      method: "DELETE",
+      body: JSON.stringify({ id: _id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
   return (
     <table className="w-full mb-6">
       <thead>
@@ -23,8 +43,8 @@ export default function BackFeedbackTable (props) {
       </thead>
       <tbody className="text-xl">
         {commentList.map((data, index) => {
-          console.log(data)
-          const { _id, name, email, phone, text } = data
+          // console.log(data)
+          const { _id, name, email, phone, text } = data;
           return (
             <tr
               className={`h-16 ${
@@ -40,6 +60,14 @@ export default function BackFeedbackTable (props) {
                 {email}
               </td>
               <td className="px-2 text-olive-100">{text}</td>
+              <td className="px-2">
+                <button
+                  onClick={() => handleFeedbackDelete(_id)}
+                  className="py-1 px-2 bg-mustard-100 text-white rounded-md"
+                >
+                  刪除
+                </button>
+              </td>
             </tr>
           );
         })}
