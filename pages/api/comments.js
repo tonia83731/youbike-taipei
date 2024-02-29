@@ -80,7 +80,7 @@ export default async function handler(req, res) {
         .deleteOne({ _id: new ObjectId(id) });
       const { deletedCount } = result;
       if (deletedCount === 0) {
-        res.status(422).json({ message: "Comment not found!" });
+        res.status(422).json({ message: "Delete comment data failed! [deletedCount: 0]" });
         return;
       }
     } catch (error) {

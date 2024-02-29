@@ -4,6 +4,15 @@ export default function BackNewsTable(props) {
   const { newsList, onNewsEdit } = props;
   // console.log(newsList)
   const theadData = ["活動時間", "活動標題", "活動內文", "更新時間", "其他"];
+  const handleNewsDelete = (_id) => {
+    fetch("/api/news", {
+      method: "DELETE",
+      body: JSON.stringify({ id: _id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   return (
     <table className="w-full mb-6">
       <thead>
@@ -65,7 +74,7 @@ export default function BackNewsTable(props) {
                 <button className="py-2 bg-lemon-100 text-white rounded-md" onClick={() => onNewsEdit(_id)}>
                   修改
                 </button>
-                <button className="py-2 bg-mustard-100 text-white rounded-md mt-1">
+                <button className="py-2 bg-mustard-100 text-white rounded-md mt-1" onClick={() => handleNewsDelete(_id)}>
                   刪除
                 </button>
               </td>

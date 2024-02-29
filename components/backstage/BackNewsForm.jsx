@@ -32,15 +32,28 @@ export default function BackNewsForm(props) {
 
   const handleNewsSubmit = (e) => {
     e.preventDefault();
-    fetch("/api/news", {
-      method: "POST",
-      body: JSON.stringify(newsData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    if(formStatus === 'add') {
+      fetch("/api/news", {
+        method: "POST",
+        body: JSON.stringify(newsData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+    if(formStatus === 'edit') {
+      fetch("/api/news", {
+        method: "PUT",
+        body: JSON.stringify(newsData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
   };
 
   useEffect(() => {
