@@ -35,7 +35,7 @@ export default function CarouselSteps(props) {
     getNewsDataAsync();
   }, []);
   return (
-    <div className="grid grid-cols-4 gap-2 mt-2 md:hidden">
+    <div className="grid grid-cols-4 gap-2 mt-2">
       {carouselData.map((data, index) => {
         return (
           <button

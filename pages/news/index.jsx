@@ -2,7 +2,7 @@ import HeadSettings from "@/components/head/HeadSettings";
 import NewsTable from "@/components/news/NewsTable";
 import { getNewsData } from "@/helpers/new-util";
 // import NewsCard from "@/components/news/newsCard";
-import { dummyEvents } from "@/data/dummyEvents";
+// import { dummyEvents } from "@/data/dummyEvents";
 import { useEffect, useState } from "react";
 
 export default function NewsPage() {

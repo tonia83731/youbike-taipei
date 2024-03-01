@@ -14,7 +14,7 @@ export default function CarouselStepsItem(props) {
           alt={title}
           width={1200}
           height={600}
-          className="w-full h-full shadow-md"
+          className="w-full h-full shadow-md md:h-4/5 md:object-cover md:object-center"
         />
       ) : page === 1 ? (
         <Image
@@ -22,7 +22,7 @@ export default function CarouselStepsItem(props) {
           alt={title}
           width={1200}
           height={600}
-          className="w-full h-full shadow-md"
+          className="w-full h-full shadow-md md:h-4/5 md:object-cover md:object-center"
         />
       ) : page === 2 ? (
         <Image
@@ -30,7 +30,7 @@ export default function CarouselStepsItem(props) {
           alt={title}
           width={1200}
           height={600}
-          className="w-full h-full shadow-md"
+          className="w-full h-full shadow-md md:h-4/5 md:object-cover md:object-center"
         />
       ) : (
         <Image
@@ -38,7 +38,7 @@ export default function CarouselStepsItem(props) {
           alt={title}
           width={1200}
           height={600}
-          className="w-full h-full shadow-md"
+          className="w-full h-full shadow-md md:h-4/5 md:object-cover md:object-center"
         />
       );
     return image;
@@ -50,7 +50,7 @@ export default function CarouselStepsItem(props) {
         0{id}
       </div>
       <div
-        className={`bg-lime-100 w-full h-full absolute top-0 left-0 right-0 hover:opacity-50 ${
+        className={`bg-lime-100 w-full h-full absolute top-0 left-0 right-0 hover:opacity-50  md:h-4/5 ${
           directionPage === page ? "opacity-50" : "opacity-80 "
         }`}
       ></div>
