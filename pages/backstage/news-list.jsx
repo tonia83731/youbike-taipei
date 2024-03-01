@@ -8,6 +8,7 @@ export default function NewsListPage() {
   const [newsList, setNewsList] = useState([]);
   // const currentDate = dayjs().format();
   const [editData, setEditData] = useState([])
+  const [inputValue, setInputValue] = useState("")
 
   const handleNewsEdit = (id) => {
     // console.log(id)
@@ -41,6 +42,10 @@ export default function NewsListPage() {
       console.log(error);
     }
   };
+  const handleSearchClick = () => {
+    const filterList = newsList.filter((data) => data.title.includes(inputValue) | data.subtitle.includes(inputValue) | data.description.includes(inputValue))
+    setNewsList(filterList)
+  }
   // const updateNewsData = (data) => {
   //   setNewsData(data);
   // };
@@ -81,6 +86,25 @@ export default function NewsListPage() {
       <div className="xl:grid xl:grid-cols-3 xl:gap-2 xl:mb-6">
         <div className="relative h-full w-full">
           <div className="xl:fixed xl:w-[29%] xl:max-w-[420px]">
+            {/* search box */}
+            <div className="grid grid-cols-5 mb-2">
+              <input
+                type="email"
+                className="w-full h-8 px-4 col-span-4 bg-white border border-olive-100 border-r-0 rounded-l-md focus:outline-none focus:border-lime-100 placeholder:text-base"
+                name="email"
+                id="subscribe-email"
+                required={true}
+                placeholder="請輸入關鍵字搜尋"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <button
+                className="h-8 px-2 bg-olive-100 text-white rounded-r-md lg:text-lg"
+                onClick={handleSearchClick}
+              >
+                搜尋
+              </button>
+            </div>
             <BackNewsForm editData={editData} />
           </div>
         </div>
