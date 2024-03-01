@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     // insert data
     try {
       await insertDocument(client, "news", newNews);
-      client.close();
+      // client.close();
     } catch (error) {
       res.status(500).json({ message: "Inserting news data failed!" });
       return;
@@ -138,6 +138,7 @@ export default async function handler(req, res) {
        res.status(500).json({ message: "Delete news data failed!" });
        return;
      }
+
      res.status(200).json({ message: "Delete news success!", _id: id });
   }
   client.close();

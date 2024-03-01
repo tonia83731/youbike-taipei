@@ -18,10 +18,10 @@ export default function BackNewsForm(props) {
     endDate: currentDate,
   });
   const [formStatus, setFormStatus] = useState("add");
-  const [noLimit, setNoLimit] = useState(false)
+  const [noLimit, setNoLimit] = useState(false);
 
   const handleCancelEdit = () => {
-    setFormStatus("add")
+    setFormStatus("add");
     setNewsData({
       title: "",
       subtitle: "",
@@ -30,31 +30,63 @@ export default function BackNewsForm(props) {
       startDate: currentDate,
       endDate: currentDate,
     });
-  }
+  };
 
-  const handleNewsSubmit = (e) => {
+  const handleNewsSubmit = async (e) => {
     e.preventDefault();
-    if(formStatus === 'add') {
-      fetch("/api/news", {
-        method: "POST",
-        body: JSON.stringify(newsData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+    if (formStatus === "add") {
+      try {
+        const response = await fetch("/api/news", {
+          method: "POST",
+          body: JSON.stringify(newsData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setNewsData({
+            title: "",
+            subtitle: "",
+            description: "",
+            image: "",
+            startDate: currentDate,
+            endDate: currentDate,
+          });
+          // add flash here
+          const { message } = data;
+          console.log(message)
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
-    if(formStatus === 'edit') {
-      fetch("/api/news", {
+    if (formStatus === "edit") {
+      const response = await fetch("/api/news", {
         method: "PUT",
         body: JSON.stringify(newsData),
         headers: {
           "Content-Type": "application/json",
         },
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      });
+      if (response.ok) {
+        try {
+          const data = await response.json();
+          setNewsData({
+            title: "",
+            subtitle: "",
+            description: "",
+            image: "",
+            startDate: currentDate,
+            endDate: currentDate,
+          });
+          // add flash here
+          const { message } = data;
+          console.log(message)
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   };
 
@@ -70,16 +102,14 @@ export default function BackNewsForm(props) {
   useEffect(() => {
     // console.log(noLimit)
     const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");
-    if(noLimit) {
+    if (noLimit) {
       setNewsData({
         ...newsData,
         startDate: currentDate,
         endDate: noLimitDate,
       });
     }
-  }, [noLimit])
-
-  // console.log(noLimit)
+  }, [noLimit]);
 
   return (
     <form className="bg-white shadow-md px-4 py-6" onSubmit={handleNewsSubmit}>
@@ -133,11 +163,13 @@ export default function BackNewsForm(props) {
           label="無限期"
           isChecked={noLimit}
           onCheckboxChange={() => {
-            setNoLimit(!noLimit)
+            setNoLimit(!noLimit);
           }}
         />
         <DatePicker
           showIcon
+          showMonthDropdown
+          showYearDropdown
           dateFormat="yyyy/MM/dd"
           locale="zh-TW"
           // isClearable={true}
@@ -147,7 +179,7 @@ export default function BackNewsForm(props) {
           startDate={newsData.startDate}
           endDate={newsData.endDate}
           onChange={(dates) => {
-            setNoLimit(false)
+            setNoLimit(false);
             setNewsData({
               ...newsData,
               startDate: dates[0],

@@ -1,7 +1,5 @@
 import Link from "next/link";
 import dayjs from "dayjs";
-import Image from "next/image";
-import Youbike from "@/public/images/Youbike2.0-green.png";
 
 export default function NewsTable(props) {
   // const { title, subtitle, updateDate, startDate, endDate } = props;
@@ -11,7 +9,7 @@ export default function NewsTable(props) {
     <table className="w-full">
       <thead>
         <tr className="bg-lime-100 text-white font-bold">
-          {theadData.map((data, index) => {
+          {theadData.map((data) => {
             return (
               <th className="h-12" key={data}>
                 {data}
@@ -38,7 +36,7 @@ export default function NewsTable(props) {
                 <div className="">~ {endAt}</div>
               </td>
               <td className="px-2 text-olive-100">
-                <Link href={`/realtime/${_id}`}>
+                <Link href={`/news/${_id}`}>
                   <div className="font-bold text-xl">{title}</div>
                   <div className="text-lime-xl text-base">{subtitle}</div>
                 </Link>

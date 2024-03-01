@@ -4,14 +4,25 @@ export default function BackNewsTable(props) {
   const { newsList, onNewsEdit } = props;
   // console.log(newsList)
   const theadData = ["活動時間", "活動標題", "活動內文", "更新時間", "其他"];
-  const handleNewsDelete = (_id) => {
-    fetch("/api/news", {
-      method: "DELETE",
-      body: JSON.stringify({ id: _id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const handleNewsDelete = async (_id) => {
+    try {
+      const response = await fetch("/api/news", {
+        method: "DELETE",
+        body: JSON.stringify({ id: _id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response)
+      if(response.ok) {
+        const data = await response.json()
+        // console.log(data)
+        const { message } = data;
+        console.log(message);
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <table className="w-full mb-6">
