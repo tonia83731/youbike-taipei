@@ -1,24 +1,60 @@
 import Image from "next/image";
+import cImg1 from "@/public/images/cImg-01.png";
+import cImg2 from "@/public/images/cImg-02.png";
+import cImg3 from "@/public/images/cImg-03.png";
+import cImg4 from "@/public/images/cImg-04.png";
 
 export default function CarouselStepsItem(props) {
-  const {id, img, directionPage, page} = props
+  const {id, directionPage, page, title} = props
+  const showImage = (page, title) => {
+    const image =
+      page === 0 ? (
+        <Image
+          src={cImg1}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      ) : page === 1 ? (
+        <Image
+          src={cImg2}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      ) : page === 2 ? (
+        <Image
+          src={cImg3}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      ) : (
+        <Image
+          src={cImg4}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      );
+    return image;
+  };
+  
   return (
     <div className="w-full h-full relative">
       <div className="patrick-hand absolute top-2/4 left-3 translate-y-[-50%] z-[50] text-white text-4xl">
-        {id}
+        0{id}
       </div>
       <div
         className={`bg-lime-100 w-full h-full absolute top-0 left-0 right-0 hover:opacity-50 ${
           directionPage === page ? "opacity-50" : "opacity-80 "
         }`}
       ></div>
-      <Image
-        src={img}
-        alt={`carousel-image${id}`}
-        width={180}
-        height={115}
-        className="w-full h-full"
-      />
+      {showImage(page, title)}
     </div>
   );
 }

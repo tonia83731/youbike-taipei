@@ -10,6 +10,7 @@ import cImg4 from "@/public/images/cImg-04.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import CarouselNumber from "./CarouselNumber";
+import { useEffect, useState } from "react";
 
 export const dummyCarousel = [
   {
@@ -48,7 +49,72 @@ export const dummyCarousel = [
 
 export default function Carousel(props) {
   const { onDirectionClick, onStepsClick, directionPage } = props;
-  const showData = dummyCarousel.find((data) => data.page === directionPage)
+  const [carouselData, setCarouselData] = useState([])
+  // const showData = carouselData.find((data) => data.page === directionPage)
+  // console.log(showData)
+
+  const showImage = (index, title) => {
+    const image =
+      index === 0 ? (
+        <Image
+          src={Youbike}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      ) : index === 1 ? (
+        <Image
+          src={YoubikeStudent}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      ) : index === 3 ? (
+        <Image
+          src={YoubikeGreen}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      ) : (
+        <Image
+          src={YoubikeShow}
+          alt={title}
+          width={1200}
+          height={600}
+          className="w-full h-full shadow-md"
+        />
+      );
+      return image
+  }
+
+  useEffect(() => {
+    const getNewsDataAsync = async () => {
+      try {
+        const response = await fetch("/api/news");
+        if (response.ok) {
+          const data = await response.json();
+          const { news } = data;
+
+          const dataLength = news?.length
+          // console.log(news)
+          // console.log(dataLength)
+          const filterData = news.filter((data, index) => index >= dataLength - 4)
+          // console.log(filterData)
+          filterData.sort((a, b) => {return -1})
+          // console.log(news)
+          // setNewsList(news);
+          setCarouselData(filterData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNewsDataAsync();
+  }, [])
 
   return (
     <div className="w-full h-auto overflow-hidden relative lg:h-3/5">
@@ -70,41 +136,36 @@ export default function Carousel(props) {
           <FontAwesomeIcon icon={faAngleRight} />
         </button>
       </div>
-      <div className="w-[400%] flex transition-transform ease-out duration-500 relative" style={{transform: `translateX(-${directionPage * 25}%)`}}>
+      <div
+        className="w-[400%] flex transition-transform ease-out duration-500 relative"
+        style={{ transform: `translateX(-${directionPage * 25}%)` }}
+      >
         {/* <div className="absolute left-2 top-1/2 translate-y-[-50%] z-50 hidden md:block">
           <CarouselNumber
           // onStepsClick={onStepsClick} directionPage={directionPage}
           />
         </div> */}
-        {
-          dummyCarousel.map((data, index) => {
-            return (
-              <div key={data.id} className="relative w-full">
-                <div
-                  className={
-                    index === 0
-                      ? "hidden"
-                      : "absolute w-2/5 h-full bg-white-75 px-3 flex flex-col justify-center md:px-4"
-                  }
-                >
-                  <h3 className="font-bold text-xl text-olive-100 md:text-2xl lg:text-4xl">
-                    {data.title}
-                  </h3>
-                  <h5 className="text-olive-100 font-semibold md:text-lg lg:text-2xl">
-                    {data.phrase}
-                  </h5>
-                </div>
-                <Image
-                  src={data.src}
-                  alt={data.title}
-                  width={1200}
-                  height={600}
-                  className="w-full h-full shadow-md"
-                />
+        {carouselData.map((data, index) => {
+          return (
+            <div key={data.id} className="relative w-full">
+              <div
+                className={
+                  index === 0
+                    ? "hidden"
+                    : "absolute w-2/5 h-full bg-white-75 px-3 flex flex-col justify-center md:px-4"
+                }
+              >
+                <h3 className="font-bold text-xl text-olive-100 md:text-2xl lg:text-4xl">
+                  {data.title}
+                </h3>
+                <h5 className="text-olive-100 font-semibold md:text-lg lg:text-2xl">
+                  {data.subtitle}
+                </h5>
               </div>
-            );
-          })
-        }
+              {showImage(index, data.title)}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

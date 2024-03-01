@@ -21,10 +21,11 @@ export default function HomePage() {
       else setDirectionPage(3)
     }
   }
-  // const handleStepsClick = (page) => {
-  //   // console.log(page)
-  //   setDirectionPage(page)
-  // }
+
+  
+  const handleStepsClick = (index) => {
+    setDirectionPage(index)
+  }
 
   // const changeDirection = () => {
   //   if(directionPage < 4) setDirectionPage(directionPage + 1)
@@ -47,7 +48,7 @@ export default function HomePage() {
         // onStepsClick={handleStepsClick}
         directionPage={directionPage}
         />
-        {/* <CarouselSteps onStepsClick={handleStepsClick} directionPage={directionPage}/>*/}
+        <CarouselSteps onStepsClick={handleStepsClick} directionPage={directionPage}/>
         <BorrowSteps />
       </section>
     </>
