@@ -16,7 +16,7 @@ export default function BackStageHeader() {
   const showCondition = route.includes('/login')
 
   return (
-    <header className="text-olive-100 mb-2 w-full absolute top-0 left-0 right-0 z-[999] text-lg bg-beige-100 md:text-xl xl:text-2xl">
+    <header className="text-olive-100 mb-2 mt-8 w-[90%] max-w-[1280px] absolute top-0 left-1/2 translate-x-[-50%] right-0 z-[999] text-lg bg-beige-100 md:text-xl xl:text-2xl">
       <div className="lg:grid lg:grid-cols-6 lg:gap-4 lg:items-center">
         <div className="w-full flex justify-center items-center">
           <div className="w-32 md:w-36 lg:w-42">
@@ -33,7 +33,7 @@ export default function BackStageHeader() {
             <div className="grid grid-cols-5 gap-4 justify-items-center items-center lg:gap-2">
               <Link
                 href="/backstage/news-list"
-                className={`col-start-2 ${
+                className={`col-start-2 lg:col-start-3 ${
                   path === "realtime" ? "text-lime-100" : ""
                 }`}
               >

@@ -21,14 +21,14 @@ export default function App({ Component, pageProps }) {
   const showFooter = !condition ? <Footer /> : <BackStageFooter />
 
   return (
-    <div className="container relative">
+    <div className="container">
       {/* <Header /> */}
       {/* <BackStageHeader /> */}
       {showHeader}
       <main className="pt-[140px] lg:pt-[110px]">
         <Component {...pageProps} />
       </main>
-      {showFooter}
+      <div className="mt-auto mx-0">{showFooter}</div>
       {/* <Footer /> */}
       {/* <BackStageFooter /> */}
     </div>
