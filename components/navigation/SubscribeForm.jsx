@@ -41,7 +41,7 @@ export default function SubscribeForm() {
         />
         <button
           type="submit"
-          className="h-8 px-2 bg-olive-100 text-white rounded-r-md"
+          className="h-8 px-2 bg-olive-100 text-white rounded-r-md lg:text-lg"
         >
           訂閱
         </button>
