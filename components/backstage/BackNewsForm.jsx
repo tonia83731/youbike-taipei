@@ -109,7 +109,7 @@ export default function BackNewsForm(props) {
         endDate: noLimitDate,
       });
     }
-  }, [noLimit]);
+  }, [noLimit, currentDate, newsData]);
 
   return (
     <form className="bg-white shadow-md px-4 py-6" onSubmit={handleNewsSubmit}>

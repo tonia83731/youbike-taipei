@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import CustomCheckbox from "@/components/input/CustomCheckbox";
 import Frame from "@/public/images/Frame.svg";
 import StopTable from "@/components/realtime/stopTable";
-import { getYouBikeRealtimeData } from "@/library/realtime_data";
+import { getYouBikeRealtimeData, getYouBikeRealtimeDataBySlice } from "@/library/realtime_data";
 import Pagination from "@/components/realtime/Pagination";
 import HeadSettings from "@/components/head/HeadSettings";
 
@@ -17,6 +17,7 @@ export default function RealTimePage(props) {
     width: undefined,
   });
   const [currentPage, setCurrentPage] = useState(1);
+  const [realtimeData, setRealtimeData] = useState(youbike)
   const perPage = 10;
   const show_page = 5;
   const numPage = Math.ceil(length / perPage);
@@ -28,7 +29,8 @@ export default function RealTimePage(props) {
       ? numArray.slice(numPage - show_page, numPage)
       : numArray.slice(currentPage - 3, currentPage + 2);
 
-  const tbodyData = youbike.filter((data, index) => index < 10);
+  const firstIndex = (currentPage - 1) * perPage;
+  const lastIndex = currentPage * perPage;
 
   const handlePageClick = (event) => {
     const id = event.target.closest("button").id;
@@ -52,6 +54,14 @@ export default function RealTimePage(props) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const getYouBikeRealtimeDataBySliceAsync = async() => {
+      const data = await getYouBikeRealtimeDataBySlice(firstIndex, lastIndex)
+      setRealtimeData(data)
+    }
+    getYouBikeRealtimeDataBySliceAsync()
+  }, [currentPage, firstIndex, lastIndex])
 
   return (
     <>
@@ -106,7 +116,7 @@ export default function RealTimePage(props) {
           <StopTable
             screenWidth={screenWidth}
             theadData={theadData}
-            tbodyData={tbodyData}
+            tbodyData={realtimeData}
           />
         </div>
         <div className="flex justify-center mb-6 lg:justify-end">

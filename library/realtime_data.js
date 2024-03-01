@@ -28,7 +28,7 @@ export const getYouBikeRealtimeDataById = async (id) => {
 export const getYouBikeRealtimeDataBySlice = async (firstIndex, lastIndex) => {
   try {
     const allData = await getYouBikeRealtimeData()
-    return allData.slice(firstIndex, lastIndex + 1)
+    return allData.slice(firstIndex, lastIndex)
   } catch (error) {
     console.error("[Failed to get YouBike realtime data by slice]:", error);
   }
