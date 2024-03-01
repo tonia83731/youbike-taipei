@@ -16,18 +16,30 @@ export default function ContactPage(props) {
     text: "",
   });
   // console.log(info);
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData)
-    fetch("/api/comments", {
+    try {
+      const response = await fetch("/api/comments", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+          "Content-Type": "application/json",
+        },
+      })
+      if(response.ok) {
+        const data = await response.json()
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          text: "",
+        });
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <>

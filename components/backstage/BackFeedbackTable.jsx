@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function BackFeedbackTable(props) {
-  const { commentList } = props;
+  const { commentList, onFeedbackDelete } = props;
   // console.log(commentList)
   const theadData = [
     "使用者",
@@ -12,16 +12,7 @@ export default function BackFeedbackTable(props) {
     "刪除",
   ];
 
-  const handleFeedbackDelete = (_id) => {
-    console.log(_id)
-    fetch("/api/comments", {
-      method: "DELETE",
-      body: JSON.stringify({ id: _id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
+  
   return (
     <table className="w-full mb-6">
       <thead>
@@ -62,7 +53,7 @@ export default function BackFeedbackTable(props) {
               <td className="px-2 text-olive-100">{text}</td>
               <td className="px-2 text-center">
                 <button
-                  onClick={() => handleFeedbackDelete(_id)}
+                  onClick={() => onFeedbackDelete(_id)}
                   className="py-1 px-2 bg-mustard-100 text-white rounded-md"
                 >
                   刪除

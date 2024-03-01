@@ -3,18 +3,24 @@ import { useState } from "react";
 export default function SubscribeForm() {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubscribeSubmit = (e) => {
+  const handleSubscribeSubmit = async (e) => {
     e.preventDefault();
-
-    fetch("/api/subscribe", {
-      method: "POST",
-      body: JSON.stringify({ email: inputValue }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        body: JSON.stringify({ email: inputValue }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      if(response.ok) {
+        const data = await response.json()
+        setInputValue('')
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <form

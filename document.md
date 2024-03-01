@@ -22,3 +22,8 @@ https://data.taipei/api/v1/dataset/c7a076dd-8aa6-4129-9c8a-e04cbf18694f?scope=re
 
 // Landing UI
 https://www.pinterest.com/pin/291537775890711589/
+
+1. 首頁News顯示置換
+2. Realtime需要根據data分頁, filter效果
+3. news item圖片顯示
+4. backstage news更新列表
