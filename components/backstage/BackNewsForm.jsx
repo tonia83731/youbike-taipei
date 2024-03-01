@@ -3,6 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import BackDefaultInput from "../input/BackDefaultInput";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import CustomCheckbox from "../input/CustomCheckbox";
 
 export default function BackNewsForm(props) {
   const { editData } = props;
@@ -17,6 +18,7 @@ export default function BackNewsForm(props) {
     endDate: currentDate,
   });
   const [formStatus, setFormStatus] = useState("add");
+  const [noLimit, setNoLimit] = useState(false)
 
   const handleCancelEdit = () => {
     setFormStatus("add")
@@ -65,6 +67,20 @@ export default function BackNewsForm(props) {
     }
   }, [editData]);
 
+  useEffect(() => {
+    // console.log(noLimit)
+    const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");
+    if(noLimit) {
+      setNewsData({
+        ...newsData,
+        startDate: currentDate,
+        endDate: noLimitDate,
+      });
+    }
+  }, [noLimit])
+
+  // console.log(noLimit)
+
   return (
     <form className="bg-white shadow-md px-4 py-6" onSubmit={handleNewsSubmit}>
       <div className="grid grid-cols-2 gap-4">
@@ -111,6 +127,15 @@ export default function BackNewsForm(props) {
       </div>
       <div className="mt-2 mb-4">
         <div className="text-olive-100 text-lg font-semibold">活動日期</div>
+        <CustomCheckbox
+          id="date-no-limit"
+          name="date"
+          label="無限期"
+          isChecked={noLimit}
+          onCheckboxChange={() => {
+            setNoLimit(!noLimit)
+          }}
+        />
         <DatePicker
           showIcon
           dateFormat="yyyy/MM/dd"
@@ -122,6 +147,7 @@ export default function BackNewsForm(props) {
           startDate={newsData.startDate}
           endDate={newsData.endDate}
           onChange={(dates) => {
+            setNoLimit(false)
             setNewsData({
               ...newsData,
               startDate: dates[0],
