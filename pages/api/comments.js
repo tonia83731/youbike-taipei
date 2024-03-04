@@ -89,6 +89,6 @@ export default async function handler(req, res) {
       return;
     }
     res.status(200).json({ message: "Delete comment success!", _id: id });
+    client.close();
   }
-  client.close();
 }

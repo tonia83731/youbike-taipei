@@ -24,6 +24,6 @@ https://data.taipei/api/v1/dataset/c7a076dd-8aa6-4129-9c8a-e04cbf18694f?scope=re
 https://www.pinterest.com/pin/291537775890711589/
 
 
-2. filter -> 顯示列表
-3. news item -> 如何顯示圖片
-4. backstage news更新列表
+1. news item -> 如何顯示圖片
+2. 登入功能
+3. backstage news更新列表
