@@ -1,4 +1,5 @@
 import {
+  getYouBikeRealtimeData,
   getYouBikeRealtimeDataById,
   getYouBikeRealtimeDataBySlice,
 } from "@/library/realtime_data";
@@ -9,10 +10,11 @@ import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { useMemo } from "react";
 
 export default function RealTimeStopPage(props) {
+  // console.log(process.env.GOOGLE_MAP_KEY)
+  const { youbike, googleKey } = props;
   const {isLoaded} = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_MAP_KEY,
+    googleMapsApiKey: googleKey,
   });
-  const { youbike } = props;
   const center = useMemo(
     () => ({
       lat: youbike.lat,
@@ -103,17 +105,21 @@ export async function getStaticProps(context) {
   const { params } = context;
   const id = params.stopId;
   const data = await getYouBikeRealtimeDataById(id);
+  const googleKey = process.env.GOOGLE_MAP_KEY
   return {
     props: {
       youbike: data,
+      googleKey: googleKey
     },
     revalidate: 60,
   };
 }
 
 export async function getStaticPaths() {
-  const youBikeDataSlice = await getYouBikeRealtimeDataBySlice(0, 11);
   // console.log(youBikeDataSlice);
+  const allData = await getYouBikeRealtimeData()
+  const youBikeDataSlice = allData.filter((data, index) => index < 11)
+  
   const paths = youBikeDataSlice.map((data) => ({
     params: { stopId: data.sno },
   }));
