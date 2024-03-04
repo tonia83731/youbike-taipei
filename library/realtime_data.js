@@ -25,11 +25,33 @@ export const getYouBikeRealtimeDataById = async (id) => {
   }
 }
 
-export const getYouBikeRealtimeDataBySlice = async (firstIndex, lastIndex) => {
+export const getYouBikeRealtimeDataBySlice = async (firstIndex, lastIndex, distArr) => {
   try {
-    const allData = await getYouBikeRealtimeData()
-    return allData.slice(firstIndex, lastIndex)
+    // const allData = await getYouBikeRealtimeData()
+    const resultData = await getYouBikeRealtimeDatafilter(distArr)
+    // console.log(resultData)
+    return {data: resultData.slice(firstIndex, lastIndex), length: resultData.length}
   } catch (error) {
     console.error("[Failed to get YouBike realtime data by slice]:", error);
+  }
+}
+
+// export const getYouBikeRealtimeDataLength = async (distArr) => {
+//   try {
+//     const resultData = await getYouBikeRealtimeDatafilter(distArr)
+//     return resultData.length
+//   } catch (error) {
+//     console.error("[Failed to get YouBike realtime data length]:", error);
+//   }
+// } 
+
+
+export const getYouBikeRealtimeDatafilter = async (distArr) => {
+  try {
+    const allData = await getYouBikeRealtimeData()
+    const filterData = allData.filter((data) => distArr.includes(data.sarea))
+    return distArr.length === 12 ? allData : filterData
+  } catch (error) {
+    console.error("[Failed to get YouBike realtime data filter]:", error);
   }
 }

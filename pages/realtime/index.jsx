@@ -12,12 +12,13 @@ import HeadSettings from "@/components/head/HeadSettings";
 const theadData = ["區域", "站點名稱", "可借車輛", "可選空位"];
 
 export default function RealTimePage(props) {
-  const { districts, youbike, length } = props;
+  const { districts, districtsName, youbike, length } = props;
   const [screenWidth, setScreenWidth] = useState({
     width: undefined,
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [realtimeData, setRealtimeData] = useState(youbike)
+  const [realtimeDataLength, setRealtimeDataLength] = useState(length)
   const [checkedAll, setCheckedAll] = useState(true)
   const districtsLength = districts?.length
   // console.log(districtsLength)
@@ -27,7 +28,7 @@ export default function RealTimePage(props) {
   // console.log(checkedState)
   const perPage = 10;
   const show_page = 5;
-  const numPage = Math.ceil(length / perPage);
+  const numPage = Math.ceil(realtimeDataLength / perPage);
   const numArray = Array.from({ length: numPage }, (_, index) => index + 1);
   const showNumArray =
     currentPage < 3
@@ -53,12 +54,16 @@ export default function RealTimePage(props) {
 
   const handleCheckedAllChange = () => {
     setCheckedAll(!checkedAll)
-    // console.log(!checkedAll)
-    setRealtimeData(youbike)
+    if(!checkedAll === true) {
+      setCheckedState(new Array(districtsLength).fill(true))
+      setRealtimeData(youbike)
+    } else {
+      setCheckedState(new Array(districtsLength).fill(false))
+    }
   }
   const handleCheckedGroupChange = (event) => {
     const id = event.target.id
-    const name = event.target.name
+    // const name = event.target.name
     const updateCheckState = checkedState.map((item, index) => {
       return index === +id ? !item : item
     })
@@ -67,7 +72,7 @@ export default function RealTimePage(props) {
     setCheckedAll(filterFalseCheck.length > 0 ? false : true)
     setCheckedState(updateCheckState)
   }
-  console.log(checkedState)
+  // console.log(checkedState)
 
   useEffect(() => {
     const handleResize = () => {
@@ -80,13 +85,21 @@ export default function RealTimePage(props) {
     };
   }, []);
 
+  // const checkDistricts = checkedState.map((checked, index) => (checked ? districts[index] : null)).filter((district) => district !== null)
+  // console.log(checkDistricts)
+
   useEffect(() => {
     const getYouBikeRealtimeDataBySliceAsync = async() => {
-      const data = await getYouBikeRealtimeDataBySlice(firstIndex, lastIndex)
+      const checkDistricts = checkedState.map((checked, index) => (checked ? districtsName[index] : null)).filter((district) => district !== null)
+      const distArr = checkedAll ? districtsName : checkDistricts
+      const object = await getYouBikeRealtimeDataBySlice(firstIndex, lastIndex, distArr)
+      const data = object.data
+      const length = object.length
       setRealtimeData(data)
+      setRealtimeDataLength(length)
     }
     getYouBikeRealtimeDataBySliceAsync()
-  }, [currentPage, firstIndex, lastIndex])
+  }, [currentPage, firstIndex, lastIndex, checkedAll, checkedState, districtsName])
 
   return (
     <>
@@ -144,6 +157,7 @@ export default function RealTimePage(props) {
             screenWidth={screenWidth}
             theadData={theadData}
             tbodyData={realtimeData}
+            totalPage={numPage}
           />
         </div>
         <div className="flex justify-center mb-6 lg:justify-end">
@@ -167,9 +181,11 @@ export async function getStaticProps() {
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
   const districts = data[0].districts;
+  const onlyDistrictsName = districts.map((item) => item.name)
   return {
     props: {
       districts: districts,
+      districtsName: onlyDistrictsName,
       youbike: prefetchData,
       length: youBikeDataLength,
     },
