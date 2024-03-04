@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_STATISTICS_URL;
+const baseUrl = process.env.STATISTICS_URL;
 // console.log(baseUrl)
 
 export const getPopularStopData = async () => {

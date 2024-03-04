@@ -18,6 +18,13 @@ export default function RealTimePage(props) {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [realtimeData, setRealtimeData] = useState(youbike)
+  const [checkedAll, setCheckedAll] = useState(true)
+  const districtsLength = districts?.length
+  // console.log(districtsLength)
+  const [checkedState, setCheckedState] = useState(
+    new Array(districtsLength).fill(true)
+  )
+  // console.log(checkedState)
   const perPage = 10;
   const show_page = 5;
   const numPage = Math.ceil(length / perPage);
@@ -43,6 +50,24 @@ export default function RealTimePage(props) {
       setCurrentPage(currentPage + 1);
     else setCurrentPage(+id);
   };
+
+  const handleCheckedAllChange = () => {
+    setCheckedAll(!checkedAll)
+    // console.log(!checkedAll)
+    setRealtimeData(youbike)
+  }
+  const handleCheckedGroupChange = (event) => {
+    const id = event.target.id
+    const name = event.target.name
+    const updateCheckState = checkedState.map((item, index) => {
+      return index === +id ? !item : item
+    })
+    // console.log(updateRealtimeData)
+    const filterFalseCheck = updateCheckState.filter((item) => item === false)
+    setCheckedAll(filterFalseCheck.length > 0 ? false : true)
+    setCheckedState(updateCheckState)
+  }
+  console.log(checkedState)
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,7 +98,7 @@ export default function RealTimePage(props) {
         <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center">
           <div className="grid grid-cols-3 items-center gap-2 lg:grid-cols-4">
             <div className="justify-self-start">
-              <CustomCheckbox id="all" name="全部" label="全部勾選" />
+              <CustomCheckbox id="all" name="全部" label="全部勾選" isChecked={checkedAll} onCheckboxChange={handleCheckedAllChange}/>
             </div>
             <span className="col-span-3"></span>
             {districts.map((district, index) => {
@@ -96,9 +121,11 @@ export default function RealTimePage(props) {
               return (
                 <div className={alignPosition} key={district.zip}>
                   <CustomCheckbox
-                    id={district.zip}
+                    id={index}
                     name={district.name}
                     label={district.name}
+                    isChecked={checkedState[index]}
+                    onCheckboxChange={handleCheckedGroupChange}
                   />
                 </div>
               );

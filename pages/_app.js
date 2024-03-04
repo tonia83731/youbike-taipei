@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }) {
       {/* <Header /> */}
       {/* <BackStageHeader /> */}
       {showHeader}
-      <main className="pt-[140px] lg:pt-[110px]">
+      <main className="pt-[140px] lg:pt-[110px] h-full">
         <Component {...pageProps} />
       </main>
       <div className="mt-auto mx-0">{showFooter}</div>

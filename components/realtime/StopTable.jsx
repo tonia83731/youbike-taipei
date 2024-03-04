@@ -4,6 +4,7 @@ import Link from "next/link";
 export default function StopTable (props) {
   const {screenWidth, theadData, tbodyData} = props
   // console.log(tbodyData)
+  // 
   return (
     <table className="w-full">
       <thead>

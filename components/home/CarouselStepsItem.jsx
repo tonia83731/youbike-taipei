@@ -46,7 +46,7 @@ export default function CarouselStepsItem(props) {
   
   return (
     <div className="w-full h-full relative">
-      <div className="patrick-hand absolute top-2/4 left-3 translate-y-[-50%] z-[50] text-white text-4xl">
+      <div className="font-patrick-hand absolute top-2/4 left-3 translate-y-[-50%] z-[50] text-white text-4xl">
         0{id}
       </div>
       <div

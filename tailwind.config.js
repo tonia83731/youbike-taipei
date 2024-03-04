@@ -40,6 +40,9 @@ module.exports = {
       screens: {
         900: "900px",
       },
+      fontFamily: {
+        'patrick-hand': ['Patrick Hand']
+      }
     },
   },
   plugins: [],

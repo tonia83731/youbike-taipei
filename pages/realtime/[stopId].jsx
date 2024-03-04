@@ -10,7 +10,7 @@ import { useMemo } from "react";
 
 export default function RealTimeStopPage(props) {
   const {isLoaded} = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
+    googleMapsApiKey: process.env.GOOGLE_MAP_KEY,
   });
   const { youbike } = props;
   const center = useMemo(

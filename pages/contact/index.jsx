@@ -7,7 +7,6 @@ import path from "path";
 import { useState } from "react";
 
 export default function ContactPage(props) {
-  // console.log(process.env.NEXT_PUBLIC_MONGODB_KEY);
   const { info, stations } = props;
   const [formData, setFormData] = useState({
     name: "",
