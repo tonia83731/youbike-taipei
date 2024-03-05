@@ -1,6 +1,9 @@
-import { ConnectDatabase, insertDocument } from "@/helpers/db-util";
+import {
+  ConnectDatabase,
+  insertDocument,
+  deleteDocument,
+} from "@/helpers/db-util";
 import { ObjectId } from "bson";
-
 
 export default async function handler(req, res) {
   // console.log(req.query);
@@ -74,17 +77,18 @@ export default async function handler(req, res) {
 
     try {
       // console.log(client)
-      const db = client.db();
-      const result = await db
-        .collection("comments")
-        .deleteOne({ _id: new ObjectId(id) });
+      const result = await deleteDocument(client, "comments", {
+        _id: new ObjectId(id),
+      });
       const { deletedCount } = result;
       if (deletedCount === 0) {
-        res.status(422).json({ message: "Delete comment data failed! [deletedCount: 0]" });
+        res
+          .status(422)
+          .json({ message: "Delete comment data failed! [deletedCount: 0]" });
         return;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(500).json({ message: "Delete comment data failed!" });
       return;
     }

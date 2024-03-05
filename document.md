@@ -20,8 +20,6 @@ https://data.taipei/api/v1/dataset/c7a076dd-8aa6-4129-9c8a-e04cbf18694f?scope=re
 https://www.pinterest.com/pin/291537775890711589/
 
 1. 顯示 new page 的圖片 > 嘗試將圖片於 MongoDB 中取出
-
 2. 使用種子資料登入後台
-3. backstage/news-list 重構；新增、修改、刪除後都要有資料改動
-4. post/put 嘗試儲存圖片檔於 MongoDB
-5. 加入 toast 來提示使用者
+3. post/put 嘗試儲存圖片檔於 MongoDB
+4. 加入 toast 來提示使用者

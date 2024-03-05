@@ -1,4 +1,9 @@
-import { ConnectDatabase, insertDocument } from "@/helpers/db-util";
+import {
+  ConnectDatabase,
+  insertDocument,
+  deleteDocument,
+  editDocument,
+} from "@/helpers/db-util";
 import { ObjectId } from "bson";
 
 export default async function handler(req, res) {
@@ -95,11 +100,18 @@ export default async function handler(req, res) {
 
     // update data
     try {
-      const db = client.db();
       if (_id) {
-        await db
-          .collection("news")
-          .replaceOne({ _id: new ObjectId(_id) }, updateNews);
+        await editDocument(
+          client,
+          "news",
+          { _id: new ObjectId(_id) },
+          updateNews
+        );
+        // const db = client.db();
+        // if (_id) {
+        //   await db
+        //     .collection("news")
+        //     .replaceOne({ _id: new ObjectId(_id) }, updateNews);
       } else {
         res.status(404).json({
           message: "_id no found!",
@@ -121,25 +133,28 @@ export default async function handler(req, res) {
       return;
     }
 
-     try {
-       const db = client.db();
-       const result = await db
-         .collection("news")
-         .deleteOne({ _id: new ObjectId(id) });
-       const { deletedCount } = result;
-       if (deletedCount === 0) {
-         res
-           .status(422)
-           .json({ message: "Delete news data failed! [deletedCount: 0]" });
-         return;
-       }
-     } catch (error) {
-       console.log(error);
-       res.status(500).json({ message: "Delete news data failed!" });
-       return;
-     }
+    try {
+      const result = await deleteDocument(client, "news", {
+        _id: new ObjectId(id),
+      });
+      //  const db = client.db();
+      //  const result = await db
+      //    .collection("news")
+      //    .deleteOne({ _id: new ObjectId(id) });
+      const { deletedCount } = result;
+      if (deletedCount === 0) {
+        res
+          .status(422)
+          .json({ message: "Delete news data failed! [deletedCount: 0]" });
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Delete news data failed!" });
+      return;
+    }
 
-     res.status(200).json({ message: "Delete news success!", _id: id });
+    res.status(200).json({ message: "Delete news success!", _id: id });
   }
   client.close();
 }

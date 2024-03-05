@@ -94,31 +94,35 @@ export default function BackNewsTable(props) {
                   {updateAt_date} <br />
                   {updateAt_time}
                 </td>
-                <td className="w-28 px-2 text-center text-olive-100 flex flex-col justify-center my-2">
-                  <button
-                    className="py-2 bg-lemon-100 text-white rounded-md"
+                <td className="px-2 text-center text-olive-100">
+                  <div className="grid grid-rows-2 gap-2 lg:grid-rows-1 lg:grid-cols-2">
+                    <button
+                    className="py-2 px-6 bg-lemon-100 text-white rounded-md"
                     onClick={() => onNewsEdit(_id)}
                   >
                     修改
                   </button>
                   <button
-                    className="py-2 bg-mustard-100 text-white rounded-md mt-1"
+                    className="py-2 px-6 bg-mustard-100 text-white rounded-md"
                     onClick={() => onNewsDelete(_id)}
                   >
                     刪除
                   </button>
+                  </div>
                 </td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      <Pagination
+      <div className="mb-6">
+        <Pagination
         pages={showNumArray}
         currentPage={currentPage}
         totalPage={numPage}
         onPageClick={handlePageClick}
       />
+      </div>
     </>
   );
 }

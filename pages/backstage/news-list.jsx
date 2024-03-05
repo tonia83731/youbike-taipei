@@ -11,6 +11,7 @@ export default function NewsListPage() {
   // const currentDate = dayjs().format();
   // const [editData, setEditData] = useState([])
   const [inputValue, setInputValue] = useState("")
+  const [newsFormToggle, setNewsFormToggle] = useState(false)
 
 
   // ------------------------ add ------------------------
@@ -37,6 +38,7 @@ export default function NewsListPage() {
       startDate: currentDate,
       endDate: currentDate,
     });
+    setNewsFormToggle(false)
   };
 
   const handleFormInputChange = (e) => {
@@ -76,6 +78,8 @@ export default function NewsListPage() {
             endDate: currentDate,
           });
           await updateNewsList()
+          setNewsFormToggle(false)
+          setFormStatus('add')
           // add flash here
           const { message } = data;
           console.log(message)
@@ -104,6 +108,7 @@ export default function NewsListPage() {
             endDate: currentDate,
           });
           await updateNewsList()
+          setNewsFormToggle(false)
           setFormStatus('add')
           // add flash here
           const { message } = data;
@@ -122,6 +127,7 @@ export default function NewsListPage() {
     // console.log(id)
     if(id) {
       setFormStatus('edit')
+      setNewsFormToggle(true)
       const newsObj = newsList.find((data) => data._id === id)
       setNewsData(newsObj)
     }
@@ -207,29 +213,32 @@ export default function NewsListPage() {
 
   return (
     <BackStageLayout pageName="消息列表">
-      <div className="xl:grid xl:grid-cols-3 xl:gap-2 xl:mb-6">
-        <div className="relative h-full w-full">
-          <div className="xl:fixed xl:w-[29%] xl:max-w-[420px]">
+      <div className="">
+        <div className="h-full w-full">
+          <div className="">
             {/* search box */}
-            <div className="grid grid-cols-5 mb-2">
-              <input
-                type="email"
-                className="w-full h-8 px-4 col-span-4 bg-white border border-olive-100 border-r-0 rounded-l-md focus:outline-none focus:border-lime-100 placeholder:text-base"
-                name="email"
-                id="subscribe-email"
-                required={true}
-                placeholder="請輸入關鍵字搜尋"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              <button
-                className="h-8 px-2 bg-olive-100 text-white rounded-r-md lg:text-lg"
-                onClick={handleSearchClick}
-              >
-                搜尋
-              </button>
+            <div className="grid grid-cols-5 gap-2">
+              <div className="col-span-4 grid grid-cols-5 mb-2">
+                <input
+                  type="email"
+                  className="w-full h-8 px-4 col-span-4 bg-white border border-olive-100 border-r-0 rounded-l-md focus:outline-none focus:border-lime-100 placeholder:text-base"
+                  name="email"
+                  id="subscribe-email"
+                  required={true}
+                  placeholder="請輸入關鍵字搜尋"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
+                <button
+                  className="h-8 px-2 bg-olive-100 text-white rounded-r-md lg:text-lg"
+                  onClick={handleSearchClick}
+                >
+                  搜尋
+                </button>
+              </div>
+              <button className="h-8 px-2 bg-lime-100 text-white rounded-md lg:text-lg" onClick={() => setNewsFormToggle(!newsFormToggle)}>{newsFormToggle ? "隱藏表單" : "顯示表單"}</button>
             </div>
-            <BackNewsForm 
+            {newsFormToggle && <BackNewsForm 
               // editData={editData} 
               newsData={newsData} 
               formStatus={formStatus}
@@ -257,7 +266,7 @@ export default function NewsListPage() {
               onFormInputChange={handleFormInputChange}
               onCancelEdit={handleCancelEdit}
               onNewsSubmit={handleNewsSubmit}
-            />
+            />}
           </div>
         </div>
         <div className="mt-4 xl:mt-0 xl:col-span-2">

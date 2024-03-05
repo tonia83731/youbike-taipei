@@ -114,7 +114,7 @@ export default function BackNewsForm(props) {
   // }, [noLimit, currentDate, newsData]);
 
   return (
-    <form className="bg-white shadow-md px-4 py-6" onSubmit={(e) => onNewsSubmit(e)}>
+    <form className="bg-white shadow-md px-4 py-6 mb-6" onSubmit={(e) => onNewsSubmit(e)}>
       <div className="grid grid-cols-2 gap-4">
         <BackDefaultInput
           label="活動標題"
