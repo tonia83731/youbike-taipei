@@ -3,18 +3,131 @@ import BackNewsForm from "@/components/backstage/BackNewsForm";
 import BackNewsTable from "@/components/backstage/BackNewsTable";
 // import dayjs from "dayjs";
 import { useState, useEffect } from "react";
+import dayjs from "dayjs";
+
 
 export default function NewsListPage() {
   const [newsList, setNewsList] = useState([]);
   // const currentDate = dayjs().format();
-  const [editData, setEditData] = useState([])
+  // const [editData, setEditData] = useState([])
   const [inputValue, setInputValue] = useState("")
+
+
+  // ------------------------ add ------------------------
+  const currentDate = dayjs().format();
+  const [newsData, setNewsData] = useState({
+    title: "",
+    subtitle: "",
+    description: "",
+    image: "",
+    startDate: currentDate,
+    endDate: currentDate,
+  });
+
+  const [formStatus, setFormStatus] = useState("add");
+   const [noLimit, setNoLimit] = useState(false);
+
+  const handleCancelEdit = () => {
+    setFormStatus("add");
+    setNewsData({
+      title: "",
+      subtitle: "",
+      description: "",
+      image: "",
+      startDate: currentDate,
+      endDate: currentDate,
+    });
+  };
+
+  const handleFormInputChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    setNewsData({...newsData, [name]: value})
+  }
+
+  const updateNewsList = async () => {
+    const updatedListResponse = await fetch("/api/news");
+    if (updatedListResponse.ok) {
+      const updatedData = await updatedListResponse.json();
+      const { news } = updatedData;
+      setNewsList(news);
+    }
+  }
+
+  const handleNewsSubmit = async (e) => {
+    e.preventDefault();
+    if (formStatus === "add") {
+      try {
+        const response = await fetch("/api/news", {
+          method: "POST",
+          body: JSON.stringify(newsData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setNewsData({
+            title: "",
+            subtitle: "",
+            description: "",
+            image: "",
+            startDate: currentDate,
+            endDate: currentDate,
+          });
+          await updateNewsList()
+          // add flash here
+          const { message } = data;
+          console.log(message)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (formStatus === "edit") {
+      const response = await fetch("/api/news", {
+        method: "PUT",
+        body: JSON.stringify(newsData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        try {
+          const data = await response.json();
+          setNewsData({
+            title: "",
+            subtitle: "",
+            description: "",
+            image: "",
+            startDate: currentDate,
+            endDate: currentDate,
+          });
+          await updateNewsList()
+          setFormStatus('add')
+          // add flash here
+          const { message } = data;
+          console.log(message)
+          await fetch("/api/news")
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
+
+  // ------------------------ add ------------------------
 
   const handleNewsEdit = (id) => {
     // console.log(id)
-    const newsData = newsList.find((data) => data._id === id)
+    if(id) {
+      setFormStatus('edit')
+      const newsObj = newsList.find((data) => data._id === id)
+      setNewsData(newsObj)
+    }
+    
     // console.log(newsData);
-    setEditData([newsData]);
+    // setEditData([newsData]);
     // updateNewsData(newsData);
   }
 
@@ -80,6 +193,17 @@ export default function NewsListPage() {
     }
     getNewsDataAsync()
   }, []);
+  useEffect(() => {
+    // console.log(noLimit)
+    const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");
+    if (noLimit) {
+      setNewsData({
+        ...newsData,
+        startDate: currentDate,
+        endDate: noLimitDate,
+      });
+    }
+  }, []);
 
   return (
     <BackStageLayout pageName="消息列表">
@@ -105,7 +229,35 @@ export default function NewsListPage() {
                 搜尋
               </button>
             </div>
-            <BackNewsForm editData={editData} />
+            <BackNewsForm 
+              // editData={editData} 
+              newsData={newsData} 
+              formStatus={formStatus}
+              noLimit={noLimit}
+              onNoLimitCheckboxChange={() => {
+                setNoLimit(!noLimit);
+                const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");
+                if (!noLimit === true) {
+                  setNewsData({
+                    ...newsData,
+                    startDate: currentDate,
+                    endDate: noLimitDate,
+                  });
+                }
+              }}
+              onDateChange={(dates) => {
+                console.log(dates)
+                setNoLimit(false);
+                setNewsData({
+                  ...newsData,
+                  startDate: dates[0],
+                  endDate: dates[1],
+                });
+              }}
+              onFormInputChange={handleFormInputChange}
+              onCancelEdit={handleCancelEdit}
+              onNewsSubmit={handleNewsSubmit}
+            />
           </div>
         </div>
         <div className="mt-4 xl:mt-0 xl:col-span-2">
