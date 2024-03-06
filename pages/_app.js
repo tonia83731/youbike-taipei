@@ -11,26 +11,26 @@ import { useRouter } from "next/router";
 import BackStageHeader from "@/components/navigation/BackstageHeader";
 import BackStageFooter from "@/components/navigation/BackstageFooter";
 
+import { SessionProvider } from "next-auth/react";
+
 registerLocale("zh-TW", zhTW);
 
 export default function App({ Component, pageProps }) {
-  const router = useRouter()
-  const {route} = router
-  const condition = route.includes('/backstage')
-  const showHeader = !condition ? <Header /> : <BackStageHeader />
-  const showFooter = !condition ? <Footer /> : <BackStageFooter />
+  const router = useRouter();
+  const { route } = router;
+  const condition = route.includes("/backstage") | route.includes("/admin");
+  const showHeader = !condition ? <Header /> : <BackStageHeader />;
+  const showFooter = !condition ? <Footer /> : <BackStageFooter />;
 
   return (
-    <div className="container">
-      {/* <Header /> */}
-      {/* <BackStageHeader /> */}
-      {showHeader}
-      <main className="pt-[140px] lg:pt-[110px] h-full">
-        <Component {...pageProps} />
-      </main>
-      <div className="mt-auto mx-0">{showFooter}</div>
-      {/* <Footer /> */}
-      {/* <BackStageFooter /> */}
-    </div>
+    <SessionProvider session={pageProps.session}>
+      <div className="container">
+        {showHeader}
+        <main className="pt-[140px] lg:pt-[110px] h-full">
+          <Component {...pageProps} />
+        </main>
+        <div className="mt-auto mx-0">{showFooter}</div>
+      </div>
+    </SessionProvider>
   );
 }

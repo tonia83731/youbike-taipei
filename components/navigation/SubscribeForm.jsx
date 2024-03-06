@@ -1,4 +1,6 @@
 import { useState } from "react";
+// import { ToastContainer, toast } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css';
 
 export default function SubscribeForm() {
   const [inputValue, setInputValue] = useState("");
@@ -16,18 +18,23 @@ export default function SubscribeForm() {
       if(response.ok) {
         const data = await response.json()
         setInputValue('')
-        console.log(data)
+        // console.log(data)
+        const {message} = data
+        console.log(message)
+        // toast.success("訂閱成功!");
       }
     } catch (error) {
       console.log(error)
     }
   };
   return (
-    <form
-      action=""
-      className="mt-2 lg:flex lg:justify-end"
-      onSubmit={handleSubscribeSubmit}
-    >
+    <>
+      {/* <ToastContainer /> */}
+      <form
+        action=""
+        className="mt-2 lg:flex lg:justify-end"
+        onSubmit={handleSubscribeSubmit}
+      >
       <div className="grid grid-cols-5">
         <input
           type="email"
@@ -47,5 +54,6 @@ export default function SubscribeForm() {
         </button>
       </div>
     </form>
+    </>
   );
 }

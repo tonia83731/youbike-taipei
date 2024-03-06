@@ -20,6 +20,7 @@ https://data.taipei/api/v1/dataset/c7a076dd-8aa6-4129-9c8a-e04cbf18694f?scope=re
 https://www.pinterest.com/pin/291537775890711589/
 
 1. 顯示 new page 的圖片 > 嘗試將圖片於 MongoDB 中取出
-2. 使用種子資料登入後台
-3. post/put 嘗試儲存圖片檔於 MongoDB
+2. post/put 嘗試儲存圖片檔於 MongoDB
+
+3. 使用種子資料登入後台
 4. 加入 toast 來提示使用者

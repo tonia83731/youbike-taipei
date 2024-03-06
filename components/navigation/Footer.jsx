@@ -40,7 +40,7 @@ export default function Footer() {
         騎乘次數 | 294,218,624
       </div>
       <Link
-        href="/backstage/login"
+        href="/admin/login"
         className="h-16 py-2 px-1 bg-lime-100 text-white flex justify-center items-center"
       >
         後台

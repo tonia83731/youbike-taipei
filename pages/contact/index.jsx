@@ -2,6 +2,9 @@ import ContactCardLayout from "@/components/contact/ContactCardLayout";
 import HeadSettings from "@/components/head/HeadSettings";
 import DefaultInput from "@/components/input/DefaultInput";
 
+// import { ToastContainer, toast } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css';
+
 import { promises as fs } from "fs";
 import path from "path";
 import { useState } from "react";
@@ -34,7 +37,10 @@ export default function ContactPage(props) {
           email: "",
           text: "",
         });
-        console.log(data)
+        // console.log(data)
+        const {message} = data
+        console.log(message)
+        // toast.success("評論已成功送出!");
       }
     } catch (error) {
       console.log(error)
@@ -46,6 +52,7 @@ export default function ContactPage(props) {
         pageName="聯絡我們"
         pageDescription="This is YouBike contact page."
       />
+      {/* <ToastContainer /> */}
       <section className="">
         <h3 className="font-bold text-2xl text-center mb-6 text-olive-100">
           聯絡我們
