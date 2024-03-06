@@ -4,9 +4,9 @@ import { useSession, signOut } from "next-auth/react";
 export default function BackStageFooter() {
   const { data: session, status } = useSession();
 
-  // const handleLogoutClick = () => {
-  //   signOut();
-  // };
+  const handleLogoutClick = () => {
+    signOut();
+  };
 
   return (
     <footer className="w-full text-center items-center text-lg md:text-xl xl:text-2xl grid grid-cols-3 gap-2 lg:grid-cols-4">
