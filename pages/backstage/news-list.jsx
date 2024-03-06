@@ -8,8 +8,6 @@ import dayjs from "dayjs";
 
 export default function NewsListPage() {
   const [newsList, setNewsList] = useState([]);
-  // const currentDate = dayjs().format();
-  // const [editData, setEditData] = useState([])
   const [inputValue, setInputValue] = useState("");
   const [newsFormToggle, setNewsFormToggle] = useState(false);
 
@@ -130,10 +128,6 @@ export default function NewsListPage() {
       const newsObj = newsList.find((data) => data._id === id);
       setNewsData(newsObj);
     }
-
-    // console.log(newsData);
-    // setEditData([newsData]);
-    // updateNewsData(newsData);
   };
 
   const handleNewsDelete = async (_id) => {
@@ -168,22 +162,6 @@ export default function NewsListPage() {
     );
     setNewsList(filterList);
   };
-  // const updateNewsData = (data) => {
-  //   setNewsData(data);
-  // };
-
-  //  const handleNewsSubmit = (e) => {
-  //    e.preventDefault();
-  //    fetch("/api/news", {
-  //      method: "POST",
-  //      body: JSON.stringify(newsData),
-  //      headers: {
-  //        "Content-Type": "application/json",
-  //      },
-  //    })
-  //      .then((response) => response.json())
-  //      .then((data) => console.log(data));
-  //  };
 
   useEffect(() => {
     const getNewsDataAsync = async () => {

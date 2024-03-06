@@ -2,9 +2,6 @@ import ContactCardLayout from "@/components/contact/ContactCardLayout";
 import HeadSettings from "@/components/head/HeadSettings";
 import DefaultInput from "@/components/input/DefaultInput";
 
-// import { ToastContainer, toast } from 'react-toastify'
-// import 'react-toastify/dist/ReactToastify.css';
-
 import { promises as fs } from "fs";
 import path from "path";
 import { useState } from "react";
@@ -23,14 +20,14 @@ export default function ContactPage(props) {
     // console.log(formData)
     try {
       const response = await fetch("/api/comments", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
           "Content-Type": "application/json",
         },
-      })
-      if(response.ok) {
-        const data = await response.json()
+      });
+      if (response.ok) {
+        const data = await response.json();
         setFormData({
           name: "",
           phone: "",
@@ -38,12 +35,12 @@ export default function ContactPage(props) {
           text: "",
         });
         // console.log(data)
-        const {message} = data
-        console.log(message)
+        const { message } = data;
+        console.log(message);
         // toast.success("評論已成功送出!");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   return (

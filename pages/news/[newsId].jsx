@@ -1,7 +1,5 @@
 import HeadSettings from "@/components/head/HeadSettings";
-// import { dummyEvents } from "@/data/dummyEvents";
 import DefaultNewsImg from "@/public/images/events/default-bike.jpg";
-import { getNewsDataById } from "@/helpers/new-util";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
@@ -9,13 +7,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function NewsItemPage() {
-  const router = useRouter()
-  const route = router.query
-  const {newsId} = route
-  // console.log(newsId)
-  // const newsId = router.query.newsId
-  // console.log(newsId)
-  const [newsItem, setNewsItem] = useState(null)
+  const router = useRouter();
+  const route = router.query;
+  const { newsId } = route;
+  const [newsItem, setNewsItem] = useState(null);
 
   useEffect(() => {
     const getNewsDataByIdAsync = async () => {
@@ -40,7 +35,7 @@ export default function NewsItemPage() {
     getNewsDataByIdAsync();
   }, [newsId]);
 
-  if(!newsItem) {
+  if (!newsItem) {
     return (
       <>
         <HeadSettings

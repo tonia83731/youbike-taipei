@@ -50,14 +50,3 @@ export default function FeedbackPage() {
     </AuthLayout>
   );
 }
-
-// export async function getStaticProps() {
-//   const res = await fetch('api/comments')
-//   const data = res.json()
-//   console.log(data)
-//   return {
-//     props: {
-//       comments: ,
-//     },
-//   };
-// }

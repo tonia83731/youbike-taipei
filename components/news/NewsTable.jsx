@@ -2,7 +2,6 @@ import Link from "next/link";
 import dayjs from "dayjs";
 
 export default function NewsTable(props) {
-  // const { title, subtitle, updateDate, startDate, endDate } = props;
   const { tbodyData } = props;
   const theadData = ["活動時間", "活動標題"];
   return (

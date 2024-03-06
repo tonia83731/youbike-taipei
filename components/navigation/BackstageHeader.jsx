@@ -2,9 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUser } from "@fortawesome//free-solid-svg-icons";
-
 import YoubikeIcon from "@/public/assets/YouBike.png";
 
 export default function BackStageHeader() {
@@ -13,7 +10,7 @@ export default function BackStageHeader() {
   const pathArr = route.split("/");
   const path = pathArr[1];
 
-  const showCondition = route.includes('/login')
+  const showCondition = route.includes("/login");
 
   return (
     <header className="text-olive-100 mb-2 mt-8 w-[90%] max-w-[1280px] absolute top-0 left-1/2 translate-x-[-50%] right-0 z-[999] text-lg bg-beige-100 md:text-xl xl:text-2xl">

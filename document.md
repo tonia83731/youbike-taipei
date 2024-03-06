@@ -21,6 +21,4 @@ https://www.pinterest.com/pin/291537775890711589/
 
 1. 顯示 new page 的圖片 > 嘗試將圖片於 MongoDB 中取出
 2. post/put 嘗試儲存圖片檔於 MongoDB
-
-3. 使用種子資料登入後台
-4. 加入 toast 來提示使用者
+3. 加入 toast 來提示使用者

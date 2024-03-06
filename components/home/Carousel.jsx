@@ -9,7 +9,6 @@ import cImg3 from "@/public/images/cImg-03.png";
 import cImg4 from "@/public/images/cImg-04.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import CarouselNumber from "./CarouselNumber";
 import { useEffect, useState } from "react";
 
 export const dummyCarousel = [
@@ -49,9 +48,7 @@ export const dummyCarousel = [
 
 export default function Carousel(props) {
   const { onDirectionClick, onStepsClick, directionPage } = props;
-  const [carouselData, setCarouselData] = useState([])
-  // const showData = carouselData.find((data) => data.page === directionPage)
-  // console.log(showData)
+  const [carouselData, setCarouselData] = useState([]);
 
   const showImage = (index, title) => {
     const image =
@@ -88,8 +85,8 @@ export default function Carousel(props) {
           className="w-full h-full shadow-md"
         />
       );
-      return image
-  }
+    return image;
+  };
 
   useEffect(() => {
     const getNewsDataAsync = async () => {
@@ -99,12 +96,16 @@ export default function Carousel(props) {
           const data = await response.json();
           const { news } = data;
 
-          const dataLength = news?.length
+          const dataLength = news?.length;
           // console.log(news)
           // console.log(dataLength)
-          const filterData = news.filter((data, index) => index >= dataLength - 4)
+          const filterData = news.filter(
+            (data, index) => index >= dataLength - 4
+          );
           // console.log(filterData)
-          filterData.sort((a, b) => {return -1})
+          filterData.sort((a, b) => {
+            return -1;
+          });
           // console.log(news)
           // setNewsList(news);
           setCarouselData(filterData);
@@ -114,7 +115,7 @@ export default function Carousel(props) {
       }
     };
     getNewsDataAsync();
-  }, [])
+  }, []);
 
   return (
     <div className="w-full h-auto overflow-hidden relative lg:h-3/5">
@@ -140,11 +141,6 @@ export default function Carousel(props) {
         className="w-[400%] flex transition-transform ease-out duration-500 relative"
         style={{ transform: `translateX(-${directionPage * 25}%)` }}
       >
-        {/* <div className="absolute left-2 top-1/2 translate-y-[-50%] z-50 hidden md:block">
-          <CarouselNumber
-          // onStepsClick={onStepsClick} directionPage={directionPage}
-          />
-        </div> */}
         {carouselData.map((data, index) => {
           return (
             <div key={data.id} className="relative w-full">

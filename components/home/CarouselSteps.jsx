@@ -1,5 +1,4 @@
 import CarouselStepsItem from "./CarouselStepsItem";
-import { dummyCarousel } from "./Carousel";
 import { useState, useEffect } from "react";
 
 export default function CarouselSteps(props) {

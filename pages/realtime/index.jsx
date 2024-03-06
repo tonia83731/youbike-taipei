@@ -5,7 +5,10 @@ import { useState, useEffect } from "react";
 import CustomCheckbox from "@/components/input/CustomCheckbox";
 import Frame from "@/public/images/Frame.svg";
 import StopTable from "@/components/realtime/stopTable";
-import { getYouBikeRealtimeData, getYouBikeRealtimeDataBySlice } from "@/library/realtime_data";
+import {
+  getYouBikeRealtimeData,
+  getYouBikeRealtimeDataBySlice,
+} from "@/library/realtime_data";
 import Pagination from "@/components/realtime/Pagination";
 import HeadSettings from "@/components/head/HeadSettings";
 
@@ -17,14 +20,14 @@ export default function RealTimePage(props) {
     width: undefined,
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [realtimeData, setRealtimeData] = useState(youbike)
-  const [realtimeDataLength, setRealtimeDataLength] = useState(length)
-  const [checkedAll, setCheckedAll] = useState(true)
-  const districtsLength = districts?.length
+  const [realtimeData, setRealtimeData] = useState(youbike);
+  const [realtimeDataLength, setRealtimeDataLength] = useState(length);
+  const [checkedAll, setCheckedAll] = useState(true);
+  const districtsLength = districts?.length;
   // console.log(districtsLength)
   const [checkedState, setCheckedState] = useState(
     new Array(districtsLength).fill(true)
-  )
+  );
   // console.log(checkedState)
   const perPage = 10;
   const show_page = 5;
@@ -33,7 +36,7 @@ export default function RealTimePage(props) {
   const showNumArray =
     currentPage < 3
       ? numArray.slice(0, 5)
-      : currentPage > numPage-2
+      : currentPage > numPage - 2
       ? numArray.slice(numPage - show_page, numPage)
       : numArray.slice(currentPage - 3, currentPage + 2);
 
@@ -53,25 +56,25 @@ export default function RealTimePage(props) {
   };
 
   const handleCheckedAllChange = () => {
-    setCheckedAll(!checkedAll)
-    if(!checkedAll === true) {
-      setCheckedState(new Array(districtsLength).fill(true))
-      setRealtimeData(youbike)
+    setCheckedAll(!checkedAll);
+    if (!checkedAll === true) {
+      setCheckedState(new Array(districtsLength).fill(true));
+      setRealtimeData(youbike);
     } else {
-      setCheckedState(new Array(districtsLength).fill(false))
+      setCheckedState(new Array(districtsLength).fill(false));
     }
-  }
+  };
   const handleCheckedGroupChange = (event) => {
-    const id = event.target.id
+    const id = event.target.id;
     // const name = event.target.name
     const updateCheckState = checkedState.map((item, index) => {
-      return index === +id ? !item : item
-    })
+      return index === +id ? !item : item;
+    });
     // console.log(updateRealtimeData)
-    const filterFalseCheck = updateCheckState.filter((item) => item === false)
-    setCheckedAll(filterFalseCheck.length > 0 ? false : true)
-    setCheckedState(updateCheckState)
-  }
+    const filterFalseCheck = updateCheckState.filter((item) => item === false);
+    setCheckedAll(filterFalseCheck.length > 0 ? false : true);
+    setCheckedState(updateCheckState);
+  };
   // console.log(checkedState)
 
   useEffect(() => {
@@ -85,21 +88,31 @@ export default function RealTimePage(props) {
     };
   }, []);
 
-  // const checkDistricts = checkedState.map((checked, index) => (checked ? districts[index] : null)).filter((district) => district !== null)
-  // console.log(checkDistricts)
-
   useEffect(() => {
-    const getYouBikeRealtimeDataBySliceAsync = async() => {
-      const checkDistricts = checkedState.map((checked, index) => (checked ? districtsName[index] : null)).filter((district) => district !== null)
-      const distArr = checkedAll ? districtsName : checkDistricts
-      const object = await getYouBikeRealtimeDataBySlice(firstIndex, lastIndex, distArr)
-      const data = object.data
-      const length = object.length
-      setRealtimeData(data)
-      setRealtimeDataLength(length)
-    }
-    getYouBikeRealtimeDataBySliceAsync()
-  }, [currentPage, firstIndex, lastIndex, checkedAll, checkedState, districtsName])
+    const getYouBikeRealtimeDataBySliceAsync = async () => {
+      const checkDistricts = checkedState
+        .map((checked, index) => (checked ? districtsName[index] : null))
+        .filter((district) => district !== null);
+      const distArr = checkedAll ? districtsName : checkDistricts;
+      const object = await getYouBikeRealtimeDataBySlice(
+        firstIndex,
+        lastIndex,
+        distArr
+      );
+      const data = object.data;
+      const length = object.length;
+      setRealtimeData(data);
+      setRealtimeDataLength(length);
+    };
+    getYouBikeRealtimeDataBySliceAsync();
+  }, [
+    currentPage,
+    firstIndex,
+    lastIndex,
+    checkedAll,
+    checkedState,
+    districtsName,
+  ]);
 
   return (
     <>
@@ -111,7 +124,13 @@ export default function RealTimePage(props) {
         <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center">
           <div className="grid grid-cols-3 items-center gap-2 lg:grid-cols-4">
             <div className="justify-self-start">
-              <CustomCheckbox id="all" name="全部" label="全部勾選" isChecked={checkedAll} onCheckboxChange={handleCheckedAllChange}/>
+              <CustomCheckbox
+                id="all"
+                name="全部"
+                label="全部勾選"
+                isChecked={checkedAll}
+                onCheckboxChange={handleCheckedAllChange}
+              />
             </div>
             <span className="col-span-3"></span>
             {districts.map((district, index) => {
@@ -181,7 +200,7 @@ export async function getStaticProps() {
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
   const districts = data[0].districts;
-  const onlyDistrictsName = districts.map((item) => item.name)
+  const onlyDistrictsName = districts.map((item) => item.name);
   return {
     props: {
       districts: districts,
@@ -192,5 +211,3 @@ export async function getStaticProps() {
     revalidate: 60,
   };
 }
-
-

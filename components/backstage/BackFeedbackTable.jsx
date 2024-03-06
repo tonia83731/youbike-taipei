@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-
 export default function BackFeedbackTable(props) {
   const { commentList, onFeedbackDelete } = props;
   // console.log(commentList)
@@ -12,7 +9,6 @@ export default function BackFeedbackTable(props) {
     "刪除",
   ];
 
-  
   return (
     <table className="w-full mb-6">
       <thead>

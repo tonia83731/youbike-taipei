@@ -12,8 +12,8 @@ import SubscribeForm from "./SubscribeForm";
 export default function Header() {
   const router = useRouter();
   const { route } = router;
-  const pathArr = route.split("/")
-  const path = pathArr[1]
+  const pathArr = route.split("/");
+  const path = pathArr[1];
 
   return (
     <>
@@ -51,16 +51,6 @@ export default function Header() {
               >
                 最新消息
               </Link>
-              {/* <div className="col-start-5 flex justify-end">
-                <button className="py-1 px-2 bg-olive-100 text-white rounded-md">
-                  訂閱
-                </button>
-                <Link href="/login">
-                <div className="w-7 h-7 rounded-full border-2 border-olive-100 flex justify-center items-center md:w-8 md:h-8 lg:w-9 lg:h-9">
-                  <FontAwesomeIcon icon={faUser} />
-                </div>
-              </Link>
-              </div> */}
             </div>
           </nav>
         </div>

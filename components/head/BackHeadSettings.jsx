@@ -1,5 +1,4 @@
 import Head from "next/head";
-import YoubikeFavicon from "@/public/YouBikeFav.ico";
 
 export default function BackHeadSettings(props) {
   const { pageName } = props;

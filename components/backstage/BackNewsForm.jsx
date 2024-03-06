@@ -1,120 +1,25 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BackDefaultInput from "../input/BackDefaultInput";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import CustomCheckbox from "../input/CustomCheckbox";
 
 export default function BackNewsForm(props) {
-  const { newsData, formStatus, noLimit, onNoLimitCheckboxChange, onDateChange, onFormInputChange, onCancelEdit, onNewsSubmit } = props;
-  // console.log(editData)
-  // const currentDate = dayjs().format();
-  // const [newsData, setNewsData] = useState({
-  //   title: "",
-  //   subtitle: "",
-  //   description: "",
-  //   image: "",
-  //   startDate: currentDate,
-  //   endDate: currentDate,
-  // });
-  // const [formStatus, setFormStatus] = useState("add");
-  // const [noLimit, setNoLimit] = useState(false);
-
-  // const handleCancelEdit = () => {
-  //   setFormStatus("add");
-  //   setNewsData({
-  //     title: "",
-  //     subtitle: "",
-  //     description: "",
-  //     image: "",
-  //     startDate: currentDate,
-  //     endDate: currentDate,
-  //   });
-  // };
-
-  // const handleNewsSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (formStatus === "add") {
-  //     try {
-  //       const response = await fetch("/api/news", {
-  //         method: "POST",
-  //         body: JSON.stringify(newsData),
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setNewsData({
-  //           title: "",
-  //           subtitle: "",
-  //           description: "",
-  //           image: "",
-  //           startDate: currentDate,
-  //           endDate: currentDate,
-  //         });
-  //         // add flash here
-  //         const { message } = data;
-  //         console.log(message)
-  //         await fetch("/api/news")
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   if (formStatus === "edit") {
-  //     const response = await fetch("/api/news", {
-  //       method: "PUT",
-  //       body: JSON.stringify(newsData),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     if (response.ok) {
-  //       try {
-  //         const data = await response.json();
-  //         setNewsData({
-  //           title: "",
-  //           subtitle: "",
-  //           description: "",
-  //           image: "",
-  //           startDate: currentDate,
-  //           endDate: currentDate,
-  //         });
-  //         // add flash here
-  //         const { message } = data;
-  //         console.log(message)
-  //         await fetch("/api/news")
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (editData.length > 0) {
-  //     setFormStatus("edit");
-  //     setNewsData(editData[0]);
-  //   } else {
-  //     setFormStatus("add");
-  //   }
-  // }, [editData]);
-
-  // useEffect(() => {
-  //   // console.log(noLimit)
-  //   const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");
-  //   if (noLimit) {
-  //     setNewsData({
-  //       ...newsData,
-  //       startDate: currentDate,
-  //       endDate: noLimitDate,
-  //     });
-  //   }
-  // }, [noLimit, currentDate, newsData]);
+  const {
+    newsData,
+    formStatus,
+    noLimit,
+    onNoLimitCheckboxChange,
+    onDateChange,
+    onFormInputChange,
+    onCancelEdit,
+    onNewsSubmit,
+  } = props;
 
   return (
-    <form className="bg-white shadow-md px-4 py-6 mb-6" onSubmit={(e) => onNewsSubmit(e)}>
+    <form
+      className="bg-white shadow-md px-4 py-6 mb-6"
+      onSubmit={(e) => onNewsSubmit(e)}
+    >
       <div className="grid grid-cols-2 gap-4">
         <BackDefaultInput
           label="活動標題"

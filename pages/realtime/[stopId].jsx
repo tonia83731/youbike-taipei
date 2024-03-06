@@ -1,7 +1,6 @@
 import {
   getYouBikeRealtimeData,
   getYouBikeRealtimeDataById,
-  getYouBikeRealtimeDataBySlice,
 } from "@/library/realtime_data";
 import { getName } from "@/library/handleName";
 import HeadSettings from "@/components/head/HeadSettings";
@@ -12,7 +11,7 @@ import { useMemo } from "react";
 export default function RealTimeStopPage(props) {
   // console.log(process.env.GOOGLE_MAP_KEY)
   const { youbike, googleKey } = props;
-  const {isLoaded} = useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: googleKey,
   });
   const center = useMemo(
@@ -32,10 +31,9 @@ export default function RealTimeStopPage(props) {
     []
   );
 
-
-  const name = getName(youbike.sna)
-  const en_name = getName(youbike.snaen)
-  if(!isLoaded) return <div>Loading...</div>;
+  const name = getName(youbike.sna);
+  const en_name = getName(youbike.snaen);
+  if (!isLoaded) return <div>Loading...</div>;
   return (
     <>
       <HeadSettings
@@ -105,11 +103,11 @@ export async function getStaticProps(context) {
   const { params } = context;
   const id = params.stopId;
   const data = await getYouBikeRealtimeDataById(id);
-  const googleKey = process.env.GOOGLE_MAP_KEY
+  const googleKey = process.env.GOOGLE_MAP_KEY;
   return {
     props: {
       youbike: data,
-      googleKey: googleKey
+      googleKey: googleKey,
     },
     revalidate: 60,
   };
@@ -117,9 +115,9 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   // console.log(youBikeDataSlice);
-  const allData = await getYouBikeRealtimeData()
-  const youBikeDataSlice = allData.filter((data, index) => index < 11)
-  
+  const allData = await getYouBikeRealtimeData();
+  const youBikeDataSlice = allData.filter((data, index) => index < 11);
+
   const paths = youBikeDataSlice.map((data) => ({
     params: { stopId: data.sno },
   }));
@@ -129,4 +127,3 @@ export async function getStaticPaths() {
     fallback: "blocking",
   };
 }
-
