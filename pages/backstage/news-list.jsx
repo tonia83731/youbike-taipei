@@ -168,7 +168,6 @@ export default function NewsListPage() {
         if (response.ok) {
           const data = await response.json();
           const { news } = data;
-          // console.log(news)
           setNewsList(news);
         }
       } catch (error) {
