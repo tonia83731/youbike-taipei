@@ -1,12 +1,10 @@
 import HeadSettings from "@/components/head/HeadSettings";
 import DefaultInput from "@/components/input/DefaultInput";
-import AuthLayout from "@/components/backstage/authLayout";
-
+import Loading from "@/components/loading/Loading";
 import { useState } from "react";
-
+import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 export default function BackStageLogin() {
   const router = useRouter();
@@ -15,7 +13,6 @@ export default function BackStageLogin() {
     email: "",
     password: "",
   });
-  console.log(status);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +27,13 @@ export default function BackStageLogin() {
     }
   };
 
+  if (status === "loading") {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Loading />
+      </div>
+    );
+  }
   if (status === "authenticated") router.replace("/backstage/news-list");
 
   return (
@@ -38,7 +42,8 @@ export default function BackStageLogin() {
         pageName="後臺登入"
         pageDescription="This is YouBike news page."
       />
-      <section className="mb-6">
+      <section className="mb-6 max-w-[600px] mx-auto">
+        {/* <Loading /> */}
         <h3 className="font-bold text-2xl text-center mb-6 text-olive-100">
           後臺登入
         </h3>

@@ -1,7 +1,6 @@
 import BackFeedbackTable from "@/components/backstage/BackFeedbackTable";
 import BackStageLayout from "@/components/backstage/BackStageLayout";
 import { useState, useEffect } from "react";
-import AuthLayout from "@/components/backstage/AuthLayout";
 
 export default function FeedbackPage() {
   const [comments, setComments] = useState([]);
@@ -40,13 +39,11 @@ export default function FeedbackPage() {
   // console.log(comments)
 
   return (
-    <AuthLayout>
-      <BackStageLayout pageName="反饋列表">
-        <BackFeedbackTable
-          commentList={comments}
-          onFeedbackDelete={handleFeedbackDelete}
-        />
-      </BackStageLayout>
-    </AuthLayout>
+    <BackStageLayout pageName="反饋列表">
+      <BackFeedbackTable
+        commentList={comments}
+        onFeedbackDelete={handleFeedbackDelete}
+      />
+    </BackStageLayout>
   );
 }

@@ -1,8 +1,6 @@
 import BackStageLayout from "@/components/backstage/BackStageLayout";
 import BackNewsForm from "@/components/backstage/BackNewsForm";
 import BackNewsTable from "@/components/backstage/BackNewsTable";
-// import dayjs from "dayjs";
-import AuthLayout from "@/components/backstage/AuthLayout";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 
@@ -192,81 +190,78 @@ export default function NewsListPage() {
   }, []);
 
   return (
-    <AuthLayout>
-      <BackStageLayout pageName="消息列表">
-        <div className="">
-          <div className="h-full w-full">
-            <div className="">
-              {/* search box */}
-              <div className="grid grid-cols-5 gap-2">
-                <div className="col-span-4 grid grid-cols-5 mb-2">
-                  <input
-                    type="email"
-                    className="w-full h-8 px-4 col-span-4 bg-white border border-olive-100 border-r-0 rounded-l-md focus:outline-none focus:border-lime-100 placeholder:text-base"
-                    name="email"
-                    id="subscribe-email"
-                    required={true}
-                    placeholder="請輸入關鍵字搜尋"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                  <button
-                    className="h-8 px-2 bg-olive-100 text-white rounded-r-md lg:text-lg"
-                    onClick={handleSearchClick}
-                  >
-                    搜尋
-                  </button>
-                </div>
+    <BackStageLayout pageName="消息列表">
+      <div className="">
+        <div className="h-full w-full">
+          <div className="">
+            {/* search box */}
+            <div className="grid grid-cols-5 gap-2">
+              <div className="col-span-4 grid grid-cols-5 mb-2">
+                <input
+                  type="email"
+                  className="w-full h-8 px-4 col-span-4 bg-white border border-olive-100 border-r-0 rounded-l-md focus:outline-none focus:border-lime-100 placeholder:text-base"
+                  name="email"
+                  id="subscribe-email"
+                  required={true}
+                  placeholder="請輸入關鍵字搜尋"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
                 <button
-                  className="h-8 px-2 bg-lime-100 text-white rounded-md lg:text-lg"
-                  onClick={() => setNewsFormToggle(!newsFormToggle)}
+                  className="h-8 px-2 bg-olive-100 text-white rounded-r-md lg:text-lg"
+                  onClick={handleSearchClick}
                 >
-                  {newsFormToggle ? "隱藏表單" : "顯示表單"}
+                  搜尋
                 </button>
               </div>
-              {newsFormToggle && (
-                <BackNewsForm
-                  // editData={editData}
-                  newsData={newsData}
-                  formStatus={formStatus}
-                  noLimit={noLimit}
-                  onNoLimitCheckboxChange={() => {
-                    setNoLimit(!noLimit);
-                    const noLimitDate =
-                      dayjs("9999-12-30").format("YYYY/MM/DD");
-                    if (!noLimit === true) {
-                      setNewsData({
-                        ...newsData,
-                        startDate: currentDate,
-                        endDate: noLimitDate,
-                      });
-                    }
-                  }}
-                  onDateChange={(dates) => {
-                    console.log(dates);
-                    setNoLimit(false);
+              <button
+                className="h-8 px-2 bg-lime-100 text-white rounded-md lg:text-lg"
+                onClick={() => setNewsFormToggle(!newsFormToggle)}
+              >
+                {newsFormToggle ? "隱藏表單" : "顯示表單"}
+              </button>
+            </div>
+            {newsFormToggle && (
+              <BackNewsForm
+                // editData={editData}
+                newsData={newsData}
+                formStatus={formStatus}
+                noLimit={noLimit}
+                onNoLimitCheckboxChange={() => {
+                  setNoLimit(!noLimit);
+                  const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");
+                  if (!noLimit === true) {
                     setNewsData({
                       ...newsData,
-                      startDate: dates[0],
-                      endDate: dates[1],
+                      startDate: currentDate,
+                      endDate: noLimitDate,
                     });
-                  }}
-                  onFormInputChange={handleFormInputChange}
-                  onCancelEdit={handleCancelEdit}
-                  onNewsSubmit={handleNewsSubmit}
-                />
-              )}
-            </div>
-          </div>
-          <div className="mt-4 xl:mt-0 xl:col-span-2">
-            <BackNewsTable
-              newsList={newsList}
-              onNewsEdit={handleNewsEdit}
-              onNewsDelete={handleNewsDelete}
-            />
+                  }
+                }}
+                onDateChange={(dates) => {
+                  console.log(dates);
+                  setNoLimit(false);
+                  setNewsData({
+                    ...newsData,
+                    startDate: dates[0],
+                    endDate: dates[1],
+                  });
+                }}
+                onFormInputChange={handleFormInputChange}
+                onCancelEdit={handleCancelEdit}
+                onNewsSubmit={handleNewsSubmit}
+              />
+            )}
           </div>
         </div>
-      </BackStageLayout>
-    </AuthLayout>
+        <div className="mt-4 xl:mt-0 xl:col-span-2">
+          <BackNewsTable
+            newsList={newsList}
+            onNewsEdit={handleNewsEdit}
+            onNewsDelete={handleNewsDelete}
+          />
+        </div>
+      </div>
+    </BackStageLayout>
   );
 }

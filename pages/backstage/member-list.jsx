@@ -1,7 +1,6 @@
 import BackStageLayout from "@/components/backstage/BackStageLayout";
 import BackUserTable from "@/components/backstage/BackUserTable";
 import { useEffect, useState } from "react";
-import AuthLayout from "@/components/backstage/AuthLayout";
 
 export default function MemberListPage() {
   const [subscribeList, setSubscribeList] = useState([]);
@@ -17,10 +16,8 @@ export default function MemberListPage() {
       });
   }, []);
   return (
-    <AuthLayout>
-      <BackStageLayout pageName="會員列表">
-        <BackUserTable subscribeList={subscribeList} />
-      </BackStageLayout>
-    </AuthLayout>
+    <BackStageLayout pageName="會員列表">
+      <BackUserTable subscribeList={subscribeList} />
+    </BackStageLayout>
   );
 }
