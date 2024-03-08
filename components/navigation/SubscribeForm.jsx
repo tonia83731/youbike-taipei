@@ -1,6 +1,8 @@
+import { useToastContext } from "@/context/ToasterContext";
 import { useState } from "react";
 
 export default function SubscribeForm() {
+  const { showToast } = useToastContext();
   const [inputValue, setInputValue] = useState("");
 
   const handleSubscribeSubmit = async (e) => {
@@ -19,10 +21,12 @@ export default function SubscribeForm() {
         // console.log(data)
         const { message } = data;
         console.log(message);
+        showToast("訂閱成功!", { type: "success" });
         // toast.success("訂閱成功!");
       }
     } catch (error) {
       console.log(error);
+      showToast("訂閱失敗，請再輸入一次!", { type: "error" });
     }
   };
   return (

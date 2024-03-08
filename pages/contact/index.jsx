@@ -1,12 +1,14 @@
 import ContactCardLayout from "@/components/contact/ContactCardLayout";
 import HeadSettings from "@/components/head/HeadSettings";
 import DefaultInput from "@/components/input/DefaultInput";
+import { useToastContext } from "@/context/ToasterContext";
 
 import { promises as fs } from "fs";
 import path from "path";
 import { useState } from "react";
 
 export default function ContactPage(props) {
+  const { showToast } = useToastContext();
   const { info, stations } = props;
   const [formData, setFormData] = useState({
     name: "",
@@ -17,6 +19,7 @@ export default function ContactPage(props) {
   // console.log(info);
   const handleContactSubmit = async (e) => {
     e.preventDefault();
+
     // console.log(formData)
     try {
       const response = await fetch("/api/comments", {
@@ -37,10 +40,12 @@ export default function ContactPage(props) {
         // console.log(data)
         const { message } = data;
         console.log(message);
+        showToast("感謝您的支持，評論已成功送出!", { type: "success" });
         // toast.success("評論已成功送出!");
       }
     } catch (error) {
       console.log(error);
+      showToast("評論送出失敗，請在試一次!", { type: "error" });
     }
   };
   return (

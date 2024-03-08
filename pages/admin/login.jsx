@@ -5,8 +5,10 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useToastContext } from "@/context/ToasterContext";
 
 export default function BackStageLogin() {
+  const { showToast } = useToastContext();
   const router = useRouter();
   const { data: session, status } = useSession();
   const [loginData, setLoginData] = useState({
@@ -24,6 +26,9 @@ export default function BackStageLogin() {
 
     if (!response.error) {
       router.replace("/backstage/news-list");
+      showToast("登入成功!", { type: "success" });
+    } else {
+      showToast("登入失敗", { type: "error" });
     }
   };
 

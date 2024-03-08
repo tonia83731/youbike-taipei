@@ -3,8 +3,10 @@ import BackNewsForm from "@/components/backstage/BackNewsForm";
 import BackNewsTable from "@/components/backstage/BackNewsTable";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import { useToastContext } from "@/context/ToasterContext";
 
 export default function NewsListPage() {
+  const { showToast } = useToastContext();
   const [newsList, setNewsList] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [newsFormToggle, setNewsFormToggle] = useState(false);
@@ -43,11 +45,15 @@ export default function NewsListPage() {
   };
 
   const updateNewsList = async () => {
-    const updatedListResponse = await fetch("/api/news");
-    if (updatedListResponse.ok) {
-      const updatedData = await updatedListResponse.json();
-      const { news } = updatedData;
-      setNewsList(news);
+    try {
+      const updatedListResponse = await fetch("/api/news");
+      if (updatedListResponse.ok) {
+        const updatedData = await updatedListResponse.json();
+        const { news } = updatedData;
+        setNewsList(news);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -76,11 +82,13 @@ export default function NewsListPage() {
           setNewsFormToggle(false);
           setFormStatus("add");
           // add flash here
+          showToast("新增最新消息項目成功!", { type: "success" });
           const { message } = data;
           console.log(message);
         }
       } catch (error) {
         console.log(error);
+        showToast("新增最新消息項目失敗!", { type: "error" });
       }
     }
     if (formStatus === "edit") {
@@ -108,9 +116,11 @@ export default function NewsListPage() {
           // add flash here
           const { message } = data;
           console.log(message);
+          showToast("最新消息項目已成功更新!", { type: "success" });
           await fetch("/api/news");
         } catch (error) {
           console.log(error);
+          showToast("最新消息項目更新失敗!", { type: "error" });
         }
       }
     }
@@ -146,9 +156,11 @@ export default function NewsListPage() {
 
         const { message } = data;
         console.log(message);
+        showToast("成功刪除最新消息項目!", { type: "success" });
       }
     } catch (error) {
       console.log(error);
+      showToast("刪除最新消息項目失敗!", { type: "error" });
     }
   };
   const handleSearchClick = () => {

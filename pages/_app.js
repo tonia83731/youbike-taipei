@@ -12,6 +12,7 @@ import BackStageHeader from "@/components/navigation/BackstageHeader";
 import BackStageFooter from "@/components/navigation/BackstageFooter";
 
 import { SessionProvider } from "next-auth/react";
+import { ToastContextProvider } from "@/context/ToasterContext";
 
 registerLocale("zh-TW", zhTW);
 
@@ -24,13 +25,15 @@ export default function App({ Component, pageProps }) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <div className="container">
-        {showHeader}
-        <main className="pt-[140px] lg:pt-[110px] h-full">
-          <Component {...pageProps} />
-        </main>
-        <div className="mt-auto mx-0">{showFooter}</div>
-      </div>
+      <ToastContextProvider>
+        <div className="container">
+          {showHeader}
+          <main className="pt-[140px] lg:pt-[110px] h-full">
+            <Component {...pageProps} />
+          </main>
+          <div className="mt-auto mx-0">{showFooter}</div>
+        </div>
+      </ToastContextProvider>
     </SessionProvider>
   );
 }

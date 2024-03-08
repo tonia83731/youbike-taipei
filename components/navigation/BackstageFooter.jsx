@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { useToastContext } from "@/context/ToasterContext";
 
 export default function BackStageFooter() {
+  const { showToast } = useToastContext();
   const { data: session, status } = useSession();
+  console.log(status);
 
   const handleLogoutClick = () => {
     signOut();
+    showToast("登出成功!", { type: "success" });
   };
 
   return (
