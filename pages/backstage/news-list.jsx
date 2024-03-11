@@ -12,7 +12,6 @@ export default function NewsListPage() {
   const [inputValue, setInputValue] = useState("");
   const [newsFormToggle, setNewsFormToggle] = useState(false);
 
-  // ------------------------ add ------------------------
   const currentDate = dayjs().format();
   const [newsData, setNewsData] = useState({
     title: "",
@@ -23,8 +22,7 @@ export default function NewsListPage() {
     endDate: currentDate,
   });
 
-  // console.log(newsData);
-
+  const [fileName, setFileName] = useState("");
   const [formStatus, setFormStatus] = useState("add");
   const [noLimit, setNoLimit] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +37,7 @@ export default function NewsListPage() {
       startDate: currentDate,
       endDate: currentDate,
     });
+    setFileName("");
     setNewsFormToggle(false);
   };
 
@@ -50,9 +49,9 @@ export default function NewsListPage() {
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-    // console.log(file);
     const base64 = await convertToBase64(file);
     // console.log(base64);
+    setFileName(file.name);
     setNewsData({ ...newsData, image: base64 });
   };
 
@@ -90,6 +89,7 @@ export default function NewsListPage() {
             startDate: currentDate,
             endDate: currentDate,
           });
+          setFileName("");
           await updateNewsList();
           setNewsFormToggle(false);
           setFormStatus("add");
@@ -122,6 +122,7 @@ export default function NewsListPage() {
             startDate: currentDate,
             endDate: currentDate,
           });
+          setFileName("");
           await updateNewsList();
           setNewsFormToggle(false);
           setFormStatus("add");
@@ -137,8 +138,6 @@ export default function NewsListPage() {
       }
     }
   };
-
-  // ------------------------ add ------------------------
 
   const handleNewsEdit = (id) => {
     // console.log(id)
@@ -249,6 +248,7 @@ export default function NewsListPage() {
             {newsFormToggle && (
               <BackNewsForm
                 // editData={editData}
+                fileName={fileName}
                 newsData={newsData}
                 formStatus={formStatus}
                 noLimit={noLimit}

@@ -8,6 +8,7 @@ export default function BackNewsForm(props) {
   const {
     newsData,
     formStatus,
+    fileName,
     noLimit,
     onNoLimitCheckboxChange,
     onDateChange,
@@ -86,6 +87,7 @@ export default function BackNewsForm(props) {
         label="活動圖片"
         id="news-image"
         name="image"
+        fileName={fileName}
         onInputChange={(e) => onFileUpload(e)}
       />
       {/* <BackDefaultInput
