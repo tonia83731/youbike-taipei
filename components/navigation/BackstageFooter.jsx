@@ -5,7 +5,7 @@ import { useToastContext } from "@/context/ToasterContext";
 export default function BackStageFooter() {
   const { showToast } = useToastContext();
   const { data: session, status } = useSession();
-  console.log(status);
+  // console.log(status);
 
   const handleLogoutClick = () => {
     signOut();

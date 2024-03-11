@@ -1,6 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BackDefaultInput from "../input/BackDefaultInput";
+import BackImgInput from "../input/BackImgInput";
 import CustomCheckbox from "../input/CustomCheckbox";
 
 export default function BackNewsForm(props) {
@@ -11,6 +12,7 @@ export default function BackNewsForm(props) {
     onNoLimitCheckboxChange,
     onDateChange,
     onFormInputChange,
+    onFileUpload,
     onCancelEdit,
     onNewsSubmit,
   } = props;
@@ -80,7 +82,13 @@ export default function BackNewsForm(props) {
           wrapperClassName="w-full"
         />
       </div>
-      <BackDefaultInput
+      <BackImgInput
+        label="活動圖片"
+        id="news-image"
+        name="image"
+        onInputChange={(e) => onFileUpload(e)}
+      />
+      {/* <BackDefaultInput
         label="活動圖片"
         id="news-image"
         name="image"
@@ -90,7 +98,7 @@ export default function BackNewsForm(props) {
         // onInputChange={(e) =>
         //   setNewsData({ ...newsData, image: e.target.value })
         // }
-      />
+      /> */}
       <div className="flex justify-end">
         {formStatus !== "add" ? (
           <button

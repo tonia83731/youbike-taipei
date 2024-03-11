@@ -4,6 +4,7 @@ import BackNewsTable from "@/components/backstage/BackNewsTable";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useToastContext } from "@/context/ToasterContext";
+import { convertToBase64 } from "@/helpers/convertToBase64";
 
 export default function NewsListPage() {
   const { showToast } = useToastContext();
@@ -22,8 +23,11 @@ export default function NewsListPage() {
     endDate: currentDate,
   });
 
+  // console.log(newsData);
+
   const [formStatus, setFormStatus] = useState("add");
   const [noLimit, setNoLimit] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCancelEdit = () => {
     setFormStatus("add");
@@ -42,6 +46,14 @@ export default function NewsListPage() {
     const name = e.target.name;
     const value = e.target.value;
     setNewsData({ ...newsData, [name]: value });
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    // console.log(file);
+    const base64 = await convertToBase64(file);
+    // console.log(base64);
+    setNewsData({ ...newsData, image: base64 });
   };
 
   const updateNewsList = async () => {
@@ -176,11 +188,13 @@ export default function NewsListPage() {
   useEffect(() => {
     const getNewsDataAsync = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch("/api/news");
         if (response.ok) {
           const data = await response.json();
           const { news } = data;
           setNewsList(news);
+          setIsLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -259,6 +273,7 @@ export default function NewsListPage() {
                   });
                 }}
                 onFormInputChange={handleFormInputChange}
+                onFileUpload={handleFileUpload}
                 onCancelEdit={handleCancelEdit}
                 onNewsSubmit={handleNewsSubmit}
               />
@@ -270,6 +285,7 @@ export default function NewsListPage() {
             newsList={newsList}
             onNewsEdit={handleNewsEdit}
             onNewsDelete={handleNewsDelete}
+            isLoading={isLoading}
           />
         </div>
       </div>
