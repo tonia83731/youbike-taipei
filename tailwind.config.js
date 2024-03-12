@@ -21,6 +21,7 @@ module.exports = {
         },
         lemon: {
           100: "#FFE27C",
+          50: "rgb(255, 226, 124, .5)",
         },
         mustard: {
           100: "#E8B634",
@@ -41,8 +42,8 @@ module.exports = {
         900: "900px",
       },
       fontFamily: {
-        'patrick-hand': ['Patrick Hand']
-      }
+        "patrick-hand": ["Patrick Hand"],
+      },
     },
   },
   plugins: [],
