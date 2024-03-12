@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 
 export default function NewsPage() {
   const [newsData, setNewsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getNewsDataAsync = async () => {
       const news = await getNewsData();
       setNewsData(news);
+      setIsLoading(false);
     };
     getNewsDataAsync();
   }, []);
@@ -23,7 +25,7 @@ export default function NewsPage() {
         <h3 className="font-bold text-2xl text-center mb-6 text-olive-100">
           最新消息
         </h3>
-        <NewsTable tbodyData={newsData} />
+        <NewsTable tbodyData={newsData} isLoading={isLoading} />
       </section>
     </>
   );

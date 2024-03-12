@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
+import Loading from "@/components/loading/Loading";
 
 export default function NewsItemPage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function NewsItemPage() {
           const data = await response.json();
           // console.log(data)
           const { news } = data;
-          console.log("Fetched news:", news);
+          // console.log("Fetched news:", news);
           setNewsItem(news); // Update newsItem state with fetched data
         } else {
           console.error("Failed to fetch news");
@@ -42,7 +43,9 @@ export default function NewsItemPage() {
           pageName="最新消息"
           pageDescription="This is YouBike news page."
         />
-        <div>Loading...</div>
+        <div className="flex justify-center items-center mt-6">
+          <Loading />
+        </div>
       </>
     );
   }
@@ -73,7 +76,7 @@ export default function NewsItemPage() {
                   alt="default-img"
                   width={600}
                   height={400}
-                  className="w-full h-72 object-cover object-bottom opacity-50"
+                  className="w-full h-80 object-cover object-bottom opacity-50"
                 />
               ) : (
                 <Image
@@ -81,7 +84,7 @@ export default function NewsItemPage() {
                   alt="default-img"
                   width={600}
                   height={400}
-                  className="w-full h-72 object-cover object-bottom opacity-50"
+                  className="w-full h-80 object-cover object-bottom"
                 />
               )}
               <div className="h-full flex flex-col">

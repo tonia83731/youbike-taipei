@@ -146,6 +146,11 @@ export default function NewsListPage() {
       setNewsFormToggle(true);
       const newsObj = newsList.find((data) => data._id === id);
       setNewsData(newsObj);
+      if (newsObj.image !== "") {
+        setFileName(newsObj.title + ".jpg/.png");
+      } else {
+        setFileName("");
+      }
     }
   };
 

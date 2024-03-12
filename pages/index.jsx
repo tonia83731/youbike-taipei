@@ -30,7 +30,6 @@ export default function HomePage() {
       <section className="mt-4 mb-6">
         <Carousel
           onDirectionClick={handleDirectionClick}
-          // onStepsClick={handleStepsClick}
           directionPage={directionPage}
         />
         <CarouselSteps
