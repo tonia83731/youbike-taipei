@@ -16,6 +16,7 @@ export default function BackNewsForm(props) {
     onFileUpload,
     onCancelEdit,
     onNewsSubmit,
+    isDisabled,
   } = props;
 
   return (
@@ -115,7 +116,8 @@ export default function BackNewsForm(props) {
         )}
         <button
           type="submit"
-          className="w-1/4 py-2 mt-4 bg-lime-100 text-white rounded-md"
+          className="w-1/4 py-2 mt-4 bg-lime-100 text-white rounded-md disabled:bg-slate-300"
+          disabled={isDisabled}
         >
           {formStatus === "add" ? "新增" : "修改"}
         </button>

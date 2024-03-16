@@ -5,7 +5,10 @@ import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
-import Loading from "@/components/loading/Loading";
+import { ThreeDots } from "react-loader-spinner";
+// import Loading from "@/components/loading/Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function NewsItemPage() {
   const router = useRouter();
@@ -43,8 +46,17 @@ export default function NewsItemPage() {
           pageName="最新消息"
           pageDescription="This is YouBike news page."
         />
-        <div className="flex justify-center items-center mt-6">
-          <Loading />
+        <div className="flex justify-center items-center">
+          <ThreeDots
+            visible={true}
+            height="80"
+            width="80"
+            color="#4fa94d"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{ color: "#B5C267" }}
+            wrapperClass=""
+          />
         </div>
       </>
     );
@@ -109,6 +121,7 @@ export default function NewsItemPage() {
                     href="/news"
                     className="text-slate-400 hover:text-slate-600 hover:underline hover:font-bold"
                   >
+                    <FontAwesomeIcon icon={faAngleLeft} className="mr-2" />
                     回到最新消息
                   </Link>
                 </div>

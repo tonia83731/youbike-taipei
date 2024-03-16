@@ -27,6 +27,7 @@ export default function NewsListPage() {
   const [formStatus, setFormStatus] = useState("add");
   const [noLimit, setNoLimit] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleCancelEdit = () => {
     setFormStatus("add");
@@ -81,6 +82,7 @@ export default function NewsListPage() {
     e.preventDefault();
     if (formStatus === "add") {
       try {
+        setIsDisabled(true);
         const response = await fetch("/api/news", {
           method: "POST",
           body: JSON.stringify(newsData),
@@ -103,6 +105,7 @@ export default function NewsListPage() {
           await updateNewsList();
           setNewsFormToggle(false);
           setFormStatus("add");
+          setIsDisabled(false);
           // add flash here
           showToast("新增最新消息項目成功!", { type: "success" });
           const { message } = data;
@@ -114,6 +117,7 @@ export default function NewsListPage() {
       }
     }
     if (formStatus === "edit") {
+      setIsDisabled(true);
       const response = await fetch("/api/news", {
         method: "PUT",
         body: JSON.stringify(newsData),
@@ -137,6 +141,7 @@ export default function NewsListPage() {
           await updateNewsList();
           setNewsFormToggle(false);
           setFormStatus("add");
+          setIsDisabled(false);
           // add flash here
           const { message } = data;
           console.log(message);
@@ -268,6 +273,7 @@ export default function NewsListPage() {
                 newsData={newsData}
                 formStatus={formStatus}
                 noLimit={noLimit}
+                isDisabled={isDisabled}
                 onNoLimitCheckboxChange={() => {
                   setNoLimit(!noLimit);
                   const noLimitDate = dayjs("9999-12-30").format("YYYY/MM/DD");

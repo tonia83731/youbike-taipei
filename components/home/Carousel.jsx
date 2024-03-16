@@ -11,14 +11,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
-export const dummyCarousel = [
+export const carouselData = [
   {
     id: "01",
     page: 1,
     title: "YouBike微笑單車2.0",
     src: Youbike,
     img: cImg1,
-    phrase: "",
+    subtitle: "Welcome to 微笑單車，24H租賃服務",
   },
   {
     id: "02",
@@ -26,7 +26,7 @@ export const dummyCarousel = [
     title: "YouBike2.0學生專案",
     src: YoubikeStudent,
     img: cImg2,
-    phrase: "YouBike 2.0學生省不完",
+    subtitle: "YouBike 2.0學生省不完",
   },
   {
     id: "03",
@@ -34,7 +34,7 @@ export const dummyCarousel = [
     title: "YouBike2.0一騎做環保",
     src: YoubikeGreen,
     img: cImg3,
-    phrase: "騎上微笑單車，還給地球乾淨的生活環境",
+    subtitle: "騎上微笑單車，還給地球乾淨的生活環境",
   },
   {
     id: "04",
@@ -42,12 +42,12 @@ export const dummyCarousel = [
     title: "YouBike2.0限時展覽",
     src: YoubikeShow,
     img: cImg4,
-    phrase: "全球自行車愛好者與YoubBike共襄盛舉",
+    subtitle: "全球自行車愛好者與YoubBike共襄盛舉",
   },
 ];
 
 export default function Carousel(props) {
-  const { onDirectionClick, onStepsClick, directionPage, carouselData } = props;
+  const { onDirectionClick, onStepsClick, directionPage } = props;
   // const [carouselData, setCarouselData] = useState([]);
 
   const showImage = (index, title) => {
