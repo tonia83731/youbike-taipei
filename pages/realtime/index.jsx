@@ -8,7 +8,7 @@ import StopTable from "@/components/realtime/stopTable";
 import {
   getYouBikeRealtimeData,
   getYouBikeRealtimeDataBySlice,
-} from "@/library/realtime_data";
+} from "@/helpers/realtime_data";
 import Pagination from "@/components/realtime/Pagination";
 import HeadSettings from "@/components/head/HeadSettings";
 

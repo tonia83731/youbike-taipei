@@ -39,6 +39,7 @@ module.exports = {
         "white-75": "rgb(255, 255, 255, .75)",
       },
       screens: {
+        600: "600px",
         900: "900px",
       },
       fontFamily: {

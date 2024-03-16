@@ -18,6 +18,7 @@ export default function NewsListPage() {
     subtitle: "",
     description: "",
     image: "",
+    imageName: "",
     startDate: currentDate,
     endDate: currentDate,
   });
@@ -34,6 +35,7 @@ export default function NewsListPage() {
       subtitle: "",
       description: "",
       image: "",
+      imageName: "",
       startDate: currentDate,
       endDate: currentDate,
     });
@@ -49,11 +51,18 @@ export default function NewsListPage() {
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
+    const maxSize = 3 * 1024 * 1024; // prevent file size over 3MB
+    const currSize = file.size;
+    // console.log(currSize);
+    if (currSize > maxSize) {
+      showToast("圖片大小不可超過3MB!", { type: "error" });
+      return;
+    }
     const base64 = await convertToBase64(file);
-    // console.log(base64);
     setFileName(file.name);
-    setNewsData({ ...newsData, image: base64 });
+    setNewsData({ ...newsData, image: base64, imageName: file.name });
   };
+  // console.log(newsData);
 
   const updateNewsList = async () => {
     try {
@@ -86,6 +95,7 @@ export default function NewsListPage() {
             subtitle: "",
             description: "",
             image: "",
+            imageName: "",
             startDate: currentDate,
             endDate: currentDate,
           });
@@ -119,6 +129,7 @@ export default function NewsListPage() {
             subtitle: "",
             description: "",
             image: "",
+            imageName: "",
             startDate: currentDate,
             endDate: currentDate,
           });

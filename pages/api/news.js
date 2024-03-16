@@ -18,8 +18,15 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "POST") {
-    const { title, subtitle, description, image, startDate, endDate } =
-      req.body;
+    const {
+      title,
+      subtitle,
+      description,
+      image,
+      imageName,
+      startDate,
+      endDate,
+    } = req.body;
 
     if (
       !title |
@@ -43,6 +50,7 @@ export default async function handler(req, res) {
       subtitle,
       description,
       image,
+      imageName,
       startDate,
       endDate,
       updateAt: new Date(),
@@ -69,8 +77,16 @@ export default async function handler(req, res) {
     res.status(200).json({ news: doucments });
   }
   if (req.method === "PUT") {
-    const { _id, title, subtitle, description, image, startDate, endDate } =
-      req.body;
+    const {
+      _id,
+      title,
+      subtitle,
+      description,
+      image,
+      imageName,
+      startDate,
+      endDate,
+    } = req.body;
     if (
       !title |
       (title.trim() === "") |
@@ -93,6 +109,7 @@ export default async function handler(req, res) {
       subtitle,
       description,
       image,
+      imageName,
       startDate,
       endDate,
       updateAt: new Date(),

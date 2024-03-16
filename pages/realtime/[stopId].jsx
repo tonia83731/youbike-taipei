@@ -1,8 +1,8 @@
 import {
   getYouBikeRealtimeData,
   getYouBikeRealtimeDataById,
-} from "@/library/realtime_data";
-import { getName } from "@/library/handleName";
+} from "@/helpers/realtime_data";
+import { getName } from "@/helpers/handleName";
 import HeadSettings from "@/components/head/HeadSettings";
 
 import {

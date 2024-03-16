@@ -3,8 +3,12 @@ import StatisticsTable from "@/components/statistics/StatisticsTable";
 import {
   getPopularStopData,
   getMonthlyUseData,
-} from "@/library/statistics_data";
-import { formattedDate, getMonthlyLabels, getMonthlyDatas } from "@/library/handleDate";
+} from "@/helpers/statistics_data";
+import {
+  formattedDate,
+  getMonthlyLabels,
+  getMonthlyDatas,
+} from "@/helpers/handleDate";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import zhTW from "date-fns/locale/zh-TW";
@@ -19,10 +23,9 @@ import {
   Legend,
   Title,
   Tooltip,
-  
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import ChartDataLabels from 'chartjs-plugin-datalabels'
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
   BarController,
@@ -45,20 +48,20 @@ export default function StatisticsPage(props) {
 
   const m_length = monthly.length - 1;
 
-  const minDate = new Date(monthly[0].date)
-  const maxDate = new Date(monthly[m_length].date)
-  
-  const defaultMonthlyData = monthly.slice(-10)
-  const defaultStartDate = new Date(defaultMonthlyData[0].date)
+  const minDate = new Date(monthly[0].date);
+  const maxDate = new Date(monthly[m_length].date);
 
-  const defaultLabels = getMonthlyLabels(defaultMonthlyData)
-  const defaultDatas = getMonthlyDatas(defaultMonthlyData)
+  const defaultMonthlyData = monthly.slice(-10);
+  const defaultStartDate = new Date(defaultMonthlyData[0].date);
+
+  const defaultLabels = getMonthlyLabels(defaultMonthlyData);
+  const defaultDatas = getMonthlyDatas(defaultMonthlyData);
   const [selectDate, setSelectDate] = useState({
     start: defaultStartDate,
     end: maxDate,
   });
-  const [chartLabels, setChartLabels] = useState(defaultLabels)
-  const [chartDatas, setChartDatas] = useState(defaultDatas)
+  const [chartLabels, setChartLabels] = useState(defaultLabels);
+  const [chartDatas, setChartDatas] = useState(defaultDatas);
 
   const handleResetClick = () => {
     // console.log('click')
@@ -66,24 +69,23 @@ export default function StatisticsPage(props) {
       start: defaultStartDate,
       end: maxDate,
     });
-    setChartLabels(defaultLabels)
-    setChartDatas(defaultDatas)
-  }
+    setChartLabels(defaultLabels);
+    setChartDatas(defaultDatas);
+  };
 
   useEffect(() => {
     const filterDatas = monthly.filter((data) => {
-      const dataDate = new Date(data.date).getTime()
+      const dataDate = new Date(data.date).getTime();
       const selectStart = new Date(selectDate.start).getTime();
       const selectEnd = new Date(selectDate.end).getTime();
       // console.log(dataDate, selectStart, selectEnd)
-      return dataDate >= selectStart && dataDate <= selectEnd
-    })
-    const newLabels = getMonthlyLabels(filterDatas)
-    const newDatas = getMonthlyDatas(filterDatas)
-    setChartLabels(newLabels)
-    setChartDatas(newDatas)
-
-  }, [selectDate, monthly])
+      return dataDate >= selectStart && dataDate <= selectEnd;
+    });
+    const newLabels = getMonthlyLabels(filterDatas);
+    const newDatas = getMonthlyDatas(filterDatas);
+    setChartLabels(newLabels);
+    setChartDatas(newDatas);
+  }, [selectDate, monthly]);
 
   const datasets = [
     {
@@ -94,8 +96,8 @@ export default function StatisticsPage(props) {
       backgroundColor: ["#FFE27C", "#E8B634"],
       datalabels: {
         color: "#758650",
-        anchor: 'end',
-        align: 'top'
+        anchor: "end",
+        align: "top",
       },
       yAxisID: "y-axias",
     },
@@ -227,11 +229,13 @@ export async function getStaticProps() {
   monthly.map((data) => {
     // console.log(data["臺北市youbike每月使用量"]);
     // const date = data["臺北市youbike每月使用量"]
-    const date = formattedDate(data["臺北市youbike每月使用量"]).formatted
-    const formatDate = formattedDate(data["臺北市youbike每月使用量"]).formattedDate.toJSON()
-    data.date = date
-    data.formatDate = formatDate
-  })
+    const date = formattedDate(data["臺北市youbike每月使用量"]).formatted;
+    const formatDate = formattedDate(
+      data["臺北市youbike每月使用量"]
+    ).formattedDate.toJSON();
+    data.date = date;
+    data.formatDate = formatDate;
+  });
 
   return {
     props: {

@@ -87,7 +87,7 @@ export default function BackNewsForm(props) {
         label="活動圖片"
         id="news-image"
         name="image"
-        fileName={fileName}
+        fileName={newsData.imageName}
         onInputChange={(e) => onFileUpload(e)}
       />
       {/* <BackDefaultInput
