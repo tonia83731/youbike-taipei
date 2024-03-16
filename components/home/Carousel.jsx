@@ -47,8 +47,8 @@ export const dummyCarousel = [
 ];
 
 export default function Carousel(props) {
-  const { onDirectionClick, onStepsClick, directionPage } = props;
-  const [carouselData, setCarouselData] = useState([]);
+  const { onDirectionClick, onStepsClick, directionPage, carouselData } = props;
+  // const [carouselData, setCarouselData] = useState([]);
 
   const showImage = (index, title) => {
     const image =
@@ -88,34 +88,34 @@ export default function Carousel(props) {
     return image;
   };
 
-  useEffect(() => {
-    const getNewsDataAsync = async () => {
-      try {
-        const response = await fetch("/api/news");
-        if (response.ok) {
-          const data = await response.json();
-          const { news } = data;
+  // useEffect(() => {
+  //   const getNewsDataAsync = async () => {
+  //     try {
+  //       const response = await fetch("/api/news");
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         const { news } = data;
 
-          const dataLength = news?.length;
-          // console.log(news)
-          // console.log(dataLength)
-          const filterData = news.filter(
-            (data, index) => index >= dataLength - 4
-          );
-          // console.log(filterData)
-          filterData.sort((a, b) => {
-            return -1;
-          });
-          // console.log(news)
-          // setNewsList(news);
-          setCarouselData(filterData);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getNewsDataAsync();
-  }, []);
+  //         const dataLength = news?.length;
+  //         // console.log(news)
+  //         // console.log(dataLength)
+  //         const filterData = news.filter(
+  //           (data, index) => index >= dataLength - 4
+  //         );
+  //         // console.log(filterData)
+  //         filterData.sort((a, b) => {
+  //           return -1;
+  //         });
+  //         // console.log(news)
+  //         // setNewsList(news);
+  //         setCarouselData(filterData);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getNewsDataAsync();
+  // }, []);
 
   return (
     <div className="w-full h-auto overflow-hidden relative lg:h-3/5">
