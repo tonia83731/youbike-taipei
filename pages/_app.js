@@ -24,7 +24,10 @@ export default function App({ Component, pageProps }) {
   const showFooter = !condition ? <Footer /> : <BackStageFooter />;
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider
+      session={pageProps.session}
+      basePath={`${process.env.NEXTAUTH_URL}/api/auth`}
+    >
       <ToastContextProvider>
         <div className="container">
           {showHeader}
