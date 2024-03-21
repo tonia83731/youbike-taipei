@@ -1,10 +1,14 @@
 import BackFeedbackTable from "@/components/backstage/BackFeedbackTable";
 import BackStageLayout from "@/components/backstage/BackStageLayout";
 import { useToastContext } from "@/context/ToasterContext";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 export default function FeedbackPage() {
   const { showToast } = useToastContext();
+  const router = useRouter();
+  const { status } = useSession();
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -45,7 +49,13 @@ export default function FeedbackPage() {
         setIsLoading(false);
       });
   }, []);
-
+  useEffect(() => {
+    if (status === "authenticated") {
+      return;
+    } else {
+      router.push("/admin/login");
+    }
+  }, [status, router]);
   // console.log(comments)
 
   return (

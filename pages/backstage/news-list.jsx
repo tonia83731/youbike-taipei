@@ -5,13 +5,16 @@ import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useToastContext } from "@/context/ToasterContext";
 import { convertToBase64 } from "@/helpers/convertToBase64";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 export default function NewsListPage() {
   const { showToast } = useToastContext();
   const [newsList, setNewsList] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [newsFormToggle, setNewsFormToggle] = useState(false);
-
+  const router = useRouter();
+  const { status } = useSession();
   const currentDate = dayjs().format();
   const [newsData, setNewsData] = useState({
     title: "",
@@ -233,6 +236,13 @@ export default function NewsListPage() {
       });
     }
   }, []);
+  useEffect(() => {
+    if (status === "authenticated") {
+      return;
+    } else {
+      router.push("/admin/login");
+    }
+  }, [status, router]);
 
   return (
     <BackStageLayout pageName="消息列表">

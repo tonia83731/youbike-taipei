@@ -1,10 +1,14 @@
 import BackStageLayout from "@/components/backstage/BackStageLayout";
 import BackUserTable from "@/components/backstage/BackUserTable";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 export default function MemberListPage() {
   const [subscribeList, setSubscribeList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const { status } = useSession();
 
   useEffect(() => {
     fetch("/api/subscribe")
@@ -21,6 +25,14 @@ export default function MemberListPage() {
         setIsLoading(false);
       });
   }, []);
+  useEffect(() => {
+    if (status === "authenticated") {
+      return;
+    } else {
+      router.push("/admin/login");
+    }
+  }, [status, router]);
+
   return (
     <BackStageLayout pageName="會員列表">
       <BackUserTable subscribeList={subscribeList} isLoading={isLoading} />
