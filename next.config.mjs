@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   server: {
-    host: '127.0.0.1'
-  }
+    host: "127.0.0.1",
+  },
 };
 
 export default nextConfig;
