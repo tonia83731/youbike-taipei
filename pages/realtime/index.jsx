@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import CustomCheckbox from "@/components/input/CustomCheckbox";
 import Frame from "@/public/images/Frame.svg";
-import StopTable from "@/components/realtime/stopTable";
+import StopTable from "@/components/realtime/StopTable";
 import {
   getYouBikeRealtimeData,
   getYouBikeRealtimeDataBySlice,
