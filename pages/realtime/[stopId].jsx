@@ -154,7 +154,7 @@ export default function RealTimeStopPage(props) {
           </div>
         </div>
         {isToggle && (
-          <div className="bg-lemon-50 text-olive-100 text-lg p-4 rounded">
+          <div className="bg-lemon-50 text-olive-100 text-lg p-4 rounded mb-6">
             <button
               className="w-full flex justify-end items-center text-slate-300 hover:text-slate-500 text-xl cursor-pointer"
               onClick={() => setIsToggle(false)}
