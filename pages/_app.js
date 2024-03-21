@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }) {
   return (
     <SessionProvider
       session={pageProps.session}
-      basePath={`${process.env.NEXTAUTH_URL}/api/auth`}
+      basePath={`${process.env.NEXTAUTH_URL}`}
     >
       <ToastContextProvider>
         <div className="container">
