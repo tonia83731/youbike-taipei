@@ -14,22 +14,31 @@ export default function Footer() {
         <Link href="/contact">聯絡我們</Link>
         <div className="hidden mx-2 md:block md:mx-4"> | </div>
         <div className="hidden text-2xl md:grid md:grid-cols-4 md:gap-2">
-          <Link href="https://www.instagram.com/youbike_tw/">
+          <Link href="https://www.instagram.com/youbike_tw/" target="_blank">
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faSquareInstagram} />
             </div>
           </Link>
-          <Link href="https://www.facebook.com/YouBike.Taipei.tw/">
+          <Link
+            href="https://www.facebook.com/YouBike.Taipei.tw/"
+            target="_blank"
+          >
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faSquareFacebook} />
             </div>
           </Link>
-          <Link href="https://page.line.me/122jqmcv?openQrModal=true">
+          <Link
+            href="https://page.line.me/122jqmcv?openQrModal=true"
+            target="_blank"
+          >
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faLine} />
             </div>
           </Link>
-          <Link href="https://www.youtube.com/channel/UCXRTadM5Rgs_EXtdNREj9KQ?view_as=subscriber">
+          <Link
+            href="https://www.youtube.com/channel/UCXRTadM5Rgs_EXtdNREj9KQ?view_as=subscriber"
+            target="_blank"
+          >
             <div className="bg-lime-100 w-10 h-10 rounded-full flex justify-center items-center">
               <FontAwesomeIcon icon={faYoutube} />
             </div>
@@ -37,10 +46,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="h-16 py-2 px-1 bg-olive-100 text-white flex justify-center items-center">
-        騎乘次數 | 294,218,624
+        騎乘次數 | 298,604,227
       </div>
       <Link
-        href="/admin/login"
+        href="#"
         className="h-16 py-2 px-1 bg-lime-100 text-white flex justify-center items-center"
       >
         後台
