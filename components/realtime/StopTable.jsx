@@ -1,11 +1,52 @@
 import { getName } from "@/helpers/handleName";
+import { useState } from "react";
 import Link from "next/link";
-
+import {
+  PaginationState,
+  SortingState,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+const REALTIMETABLEMAP = [
+  ["StationUID", "ID"],
+  ["StationName", "站點名稱"],
+  ["AvailableRentBike_general", "可借車輛(一般)"],
+  ["AvailableRentBike_electric", "可借車輛(電動)"],
+  ["AvailableReturnBikes", "可選空位"],
+];
 export default function StopTable(props) {
-  const { screenWidth, theadData, tbodyData, totalPage } = props;
+  const { tableData } = props;
 
-  // console.log(totalPage)
-
+  const [sourceSorting, setSourceSorting] = useState();
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 50,
+  });
+  const columnHelper = createColumnHelper();
+  const columns = REALTIMETABLEMAP.map((title) => {
+    columnHelper.accessor(title[0], {
+      header: () => <span className="">{title[1]}</span>,
+      cell: (info) => <span className="">{info.getValue()}</span>,
+    });
+  });
+  const table = useReactTable({
+    data: tableData,
+    columns: columns,
+    state: {
+      sorting: sourceSorting,
+      pagination,
+    },
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSourceSorting,
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    debugTable: true,
+  });
   return (
     <table className="w-full">
       <thead>

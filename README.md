@@ -1,6 +1,6 @@
-# Youbike Taipei
+# Youbike Taiwan
 
-The project provide Taiwan Taipei government bicycle system (Youbike2.0) realtime data for user.
+The project provide Taiwan Taiwan government bicycle system (Youbike2.0) realtime data for user.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

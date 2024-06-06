@@ -1,59 +1,46 @@
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import Select from "react-select";
+import { twCity } from "@/data/twCity";
+import { twCityDistricts } from "@/data/twCityDistricts";
+import { getDistrictsFromCity } from "@/helpers/handleCityandDistricts";
+import {
+  getYoubikeRealtimeDataByCity,
+  getYoubikeStationData,
+} from "@/helpers/realtime_data";
+
+import HeadSettings from "@/components/head/HeadSettings";
+import Frame from "@/public/images/Frame.svg";
+
 import { promises as fs } from "fs";
 import path from "path";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import CustomCheckbox from "@/components/input/CustomCheckbox";
-import Frame from "@/public/images/Frame.svg";
-import StopTable from "@/components/realtime/StopTable";
-import {
-  getYouBikeRealtimeData,
-  getYouBikeRealtimeDataBySlice,
-} from "@/helpers/realtime_data";
-import Pagination from "@/components/realtime/Pagination";
-import HeadSettings from "@/components/head/HeadSettings";
 
-const theadData = ["區域", "站點名稱", "可借車輛", "可選空位"];
+import CustomCheckbox from "@/components/input/CustomCheckbox";
+
+import StopTable from "@/components/realtime/StopTable";
+import Pagination from "@/components/realtime/Pagination";
 
 export default function RealTimePage(props) {
+  // const cityRef = useRef();
+  // console.log(cityRef);
   const { districts, districtsName, youbike, length } = props;
+  const [citySelect, setCitySelect] = useState({
+    label: "臺北市",
+    value: "Taipei",
+  });
+  const [districtList, setDistrictList] = useState(
+    getDistrictsFromCity(citySelect.label)
+  );
+  const [checkedAll, setCheckedAll] = useState(true);
+  const districtsLength = districtList?.length;
+  const [checkedState, setCheckedState] = useState(
+    new Array(districtsLength.Length).fill(true)
+  );
   const [screenWidth, setScreenWidth] = useState({
     width: undefined,
   });
-  const [currentPage, setCurrentPage] = useState(1);
   const [realtimeData, setRealtimeData] = useState(youbike);
   const [realtimeDataLength, setRealtimeDataLength] = useState(length);
-  const [checkedAll, setCheckedAll] = useState(true);
-  const districtsLength = districts?.length;
-  // console.log(districtsLength)
-  const [checkedState, setCheckedState] = useState(
-    new Array(districtsLength).fill(true)
-  );
-  // console.log(checkedState)
-  const perPage = 10;
-  const show_page = 5;
-  const numPage = Math.ceil(realtimeDataLength / perPage);
-  const numArray = Array.from({ length: numPage }, (_, index) => index + 1);
-  const showNumArray =
-    currentPage < 3
-      ? numArray.slice(0, 5)
-      : currentPage > numPage - 2
-      ? numArray.slice(numPage - show_page, numPage)
-      : numArray.slice(currentPage - 3, currentPage + 2);
-
-  const firstIndex = (currentPage - 1) * perPage;
-  const lastIndex = currentPage * perPage;
-
-  const handlePageClick = (event) => {
-    const id = event.target.closest("button").id;
-    if (currentPage > 1 && id === "first-btn") setCurrentPage(1);
-    else if (currentPage > 1 && id === "prev-btn")
-      setCurrentPage(currentPage - 1);
-    else if (currentPage < numPage && id === "last-btn")
-      setCurrentPage(numPage);
-    else if (currentPage < numPage && id === "next-btn")
-      setCurrentPage(currentPage + 1);
-    else setCurrentPage(+id);
-  };
 
   const handleCheckedAllChange = () => {
     setCheckedAll(!checkedAll);
@@ -75,7 +62,14 @@ export default function RealTimePage(props) {
     setCheckedAll(filterFalseCheck.length > 0 ? false : true);
     setCheckedState(updateCheckState);
   };
-  // console.log(checkedState)
+  const handleOptionSelect = async (inputValue) => {
+    const districtData = getDistrictsFromCity(inputValue.label);
+    const object = await getYoubikeRealtimeDataByCity(inputValue.value);
+    const length = object.length;
+    setRealtimeData(object);
+    setRealtimeDataLength(length);
+    setDistrictList(districtData);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,30 +83,14 @@ export default function RealTimePage(props) {
   }, []);
 
   useEffect(() => {
-    const getYouBikeRealtimeDataBySliceAsync = async () => {
-      const checkDistricts = checkedState
-        .map((checked, index) => (checked ? districtsName[index] : null))
-        .filter((district) => district !== null);
-      const distArr = checkedAll ? districtsName : checkDistricts;
-      const object = await getYouBikeRealtimeDataBySlice(
-        firstIndex,
-        lastIndex,
-        distArr
-      );
-      const data = object.data;
+    const getYoubikeRealtimeDataByCityAsync = async () => {
+      const object = await getYoubikeRealtimeDataByCity(citySelect.value);
       const length = object.length;
-      setRealtimeData(data);
+      setRealtimeData(object);
       setRealtimeDataLength(length);
     };
-    getYouBikeRealtimeDataBySliceAsync();
-  }, [
-    currentPage,
-    firstIndex,
-    lastIndex,
-    checkedAll,
-    checkedState,
-    districtsName,
-  ]);
+    getYoubikeRealtimeDataByCityAsync();
+  }, []);
 
   return (
     <>
@@ -121,6 +99,17 @@ export default function RealTimePage(props) {
         pageDescription="This is YouBike realtime page."
       />
       <section className="">
+        <Select
+          options={twCity}
+          // ref={cityRef}
+          // id={`tag${step}`}
+          // name={`tag${step}`}
+          defaultValue={citySelect}
+          closeMenuOnSelect={true}
+          className="grow w-full"
+          classNamePrefix="react-select"
+          onChange={handleOptionSelect}
+        />
         <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center">
           <div className="grid grid-cols-3 items-center gap-2 lg:grid-cols-4">
             <div className="justify-self-start">
@@ -133,7 +122,7 @@ export default function RealTimePage(props) {
               />
             </div>
             <span className="col-span-3"></span>
-            {districts.map((district, index) => {
+            {districtList.map((district, index) => {
               const alignPositionSmall =
                 index % 3 === 0
                   ? "justify-self-start"
@@ -172,20 +161,7 @@ export default function RealTimePage(props) {
           />
         </div>
         <div className="mt-6 mb-4">
-          <StopTable
-            screenWidth={screenWidth}
-            theadData={theadData}
-            tbodyData={realtimeData}
-            totalPage={numPage}
-          />
-        </div>
-        <div className="flex justify-center mb-6 lg:justify-end">
-          <Pagination
-            pages={showNumArray}
-            currentPage={currentPage}
-            onPageClick={handlePageClick}
-            totalPage={numPage}
-          />
+          <StopTable tableData={realtimeData} />
         </div>
       </section>
     </>

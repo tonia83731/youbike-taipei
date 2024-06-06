@@ -27,45 +27,6 @@ export default function HomePage() {
     setDirectionPage(index);
   };
 
-  // useEffect(() => {
-  //   const getNewsDataAsync = async () => {
-  //     try {
-  //       const response = await fetch("/api/news");
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         const { news } = data;
-
-  //         const dataLength = news?.length;
-  //         // console.log(news)
-  //         // console.log(dataLength)
-  //         const filterData = news.filter(
-  //           (data, index) => index >= dataLength - 4
-  //         );
-  //         // console.log(filterData)
-  //         filterData.sort((a, b) => {
-  //           return -1;
-  //         });
-  //         // console.log(news)
-  //         // setNewsList(news);
-  //         setCarouselData(filterData);
-  //         setIsLoading(false);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getNewsDataAsync();
-  // }, []);
-
-  // if (isLoading)
-  //   return (
-  //     <div className="w-full h-full flex flex-col justify-center items-center">
-  //       <Image src={LoadingImg} alt="loading" width={600} height={400} />
-  //       <Loading />
-  //       <p className="text-lg font-bold">Almost Done! Hold on a second.</p>
-  //     </div>
-  //   );
-
   return (
     <>
       <HeadSettings
